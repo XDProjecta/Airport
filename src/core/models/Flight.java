@@ -106,7 +106,7 @@ public class Flight {
     public LocalDateTime calculateArrivalDate() {
         return departureDate.plusHours(hoursDurationScale).plusHours(hoursDurationArrival).plusMinutes(minutesDurationScale).plusMinutes(minutesDurationArrival);
     }
-    
+    //APARTE
     public void delay(int hours, int minutes) {
         this.departureDate = this.departureDate.plusHours(hours).plusMinutes(minutes);
     }

@@ -1,15 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package core.models;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author edangulo
- */
 public class Plane {
     
     private final String id;
@@ -27,7 +20,7 @@ public class Plane {
         this.airline = airline;
         this.flights = new ArrayList<>();
     }
-
+//ABSTRACT CLASS OR INTERFACE
     public void addFlight(Flight flight) {
         this.flights.add(flight);
     }

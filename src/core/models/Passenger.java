@@ -33,7 +33,7 @@ public class Passenger {
         this.country = country;
         this.flights = new ArrayList<>();
     }
-
+//APARTE, ABSTRACT CLASS OR INTERFACE
     public void addFlight(Flight flight) {
         this.flights.add(flight);
     }
