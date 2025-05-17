@@ -1,6 +1,6 @@
 
 package core.models.storage;
 
-public class FlightStorage {
+public class FlightStorage implements StorageInterface {
     
 }
