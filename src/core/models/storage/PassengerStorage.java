@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class PassengerStorage {
+public class PassengerStorage implements StorageInterface {
     private List<Passenger> passengers;
     
     public PassengerStorage() {
