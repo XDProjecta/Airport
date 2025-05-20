@@ -1,7 +1,7 @@
-
+//POR EVALUAR AQUÍ NO HAY SOLID
 package core.models.storage;
 
-import core.models.Passenger;
+/*import core.models.Passenger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -41,4 +41,32 @@ public class PassengerStorage implements StorageInterface {
     private boolean passengerExists(long id) {
         return passengers.stream().anyMatch(p -> p.getId() == id);
     }
+
+    @Override
+    public void add(Object genericItem) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public ArrayList getAll() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+}*/
+import core.models.Passenger;
+import java.util.ArrayList;
+
+public class PassengerStorage implements StorageInterface<Passenger> {
+
+    private ArrayList<Passenger> passengers = new ArrayList();
+
+    @Override
+    public void add(Passenger passenger) {
+        this.passengers.add(passenger);
+    }
+
+    @Override
+    public ArrayList getAll() {
+        return passengers;
+    }
+
 }

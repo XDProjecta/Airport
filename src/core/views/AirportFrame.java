@@ -1479,7 +1479,7 @@ public class AirportFrame extends javax.swing.JFrame {
         String model = airplaneModelTxt.getText();
         int maxCapacity = Integer.parseInt(airplaneCapacityTxt.getText());
         String airline = airplaneAirline.getText();
-
+//ESTO SE TIENE QUE HACER EN EL CONTROLADOR UNA VEZ SE VERIFIQUE QUE LOS DATOS SON CORRECTOS
         this.planes.add(new Plane(id, brand, model, maxCapacity, airline));
 
         this.planeComBox.addItem(id);
