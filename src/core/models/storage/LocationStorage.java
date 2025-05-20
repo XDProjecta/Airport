@@ -5,7 +5,16 @@ import java.util.ArrayList;
 
 public class LocationStorage implements StorageInterface<Location> {
 private ArrayList<Location> locations = new ArrayList();
-    @Override
+  private static LocationStorage instance;
+    
+        public static LocationStorage getInstance() {
+        if (instance == null) {
+            instance = new LocationStorage();
+        }
+        return instance;
+    }
+   
+@Override
     public void add(Location location) {
         this.locations.add(location);
     }
