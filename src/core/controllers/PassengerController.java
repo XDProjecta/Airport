@@ -1,5 +1,5 @@
 
-package core.controllers;
+/*package core.controllers;
 
 import core.models.Passenger;
 import core.models.storage.PassengerStorage;
@@ -82,4 +82,4 @@ public class PassengerController {
         return new Response(200, "Validación exitosa");
     }
 }
-
+*/
