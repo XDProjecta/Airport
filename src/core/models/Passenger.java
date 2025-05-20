@@ -17,19 +17,23 @@ public class Passenger {
     private final long id;
     private String firstname;
     private String lastname;
+    private String email;
     private LocalDate birthDate;
     private int countryPhoneCode;
     private long phone;
+    private int PhoneCode;
     private String country;
     private ArrayList<Flight> flights;
 
-    public Passenger(long id, String firstname, String lastname, LocalDate birthDate, int countryPhoneCode, long phone, String country) {
+    public Passenger(long id, String firstname, String lastname, String country, String birthDate1, int countryPhoneCode, long phone) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
+        this.email = email;
         this.birthDate = birthDate;
         this.countryPhoneCode = countryPhoneCode;
         this.phone = phone;
+        this.PhoneCode = PhoneCode;
         this.country = country;
         this.flights = new ArrayList<>();
     }
@@ -45,7 +49,7 @@ public class Passenger {
     public String getFirstname() {
         return firstname;
     }
-
+    
     public String getLastname() {
         return lastname;
     }
@@ -54,12 +58,20 @@ public class Passenger {
         return birthDate;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     public int getCountryPhoneCode() {
         return countryPhoneCode;
     }
 
     public long getPhone() {
         return phone;
+    }
+
+    public int getPhoneCode() {
+        return PhoneCode;
     }
 
     public String getCountry() {
@@ -78,7 +90,7 @@ public class Passenger {
         this.lastname = lastname;
     }
 
-    public void setBirthDate(LocalDate birthDate) {
+    public void setbirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 
@@ -88,6 +100,18 @@ public class Passenger {
 
     public void setPhone(long phone) {
         this.phone = phone;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public void setPhoneCode(int PhoneCode) {
+        this.PhoneCode = PhoneCode;
     }
 
     public void setCountry(String country) {
@@ -109,5 +133,8 @@ public class Passenger {
     public int getNumFlights() {
         return flights.size();
     }
+
+    
+
     
 }

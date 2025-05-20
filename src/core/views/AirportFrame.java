@@ -1468,7 +1468,7 @@ public class AirportFrame extends javax.swing.JFrame {
 
         LocalDate birthDate = LocalDate.of(year, month, day);
 
-        this.passengers.add(new Passenger(id, firstname, lastname, birthDate, phoneCode, phone, country));
+        this.passengers.add(new Passenger(id, firstname, lastname, country, birthDate, phoneCode, phone));
         this.userSelect.addItem("" + id);
     }//GEN-LAST:event_registerPassengerBtnActionPerformed
 
