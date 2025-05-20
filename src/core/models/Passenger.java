@@ -25,7 +25,7 @@ public class Passenger {
     private String country;
     private ArrayList<Flight> flights;
 
-    public Passenger(long id, String firstname, String lastname, String country, String birthDate1, int countryPhoneCode, long phone) {
+    public Passenger(long id, String firstname, String lastname, LocalDate birthDate, int countryPhoneCode, long phone, String country) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
