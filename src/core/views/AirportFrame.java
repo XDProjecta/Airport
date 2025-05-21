@@ -9,10 +9,13 @@ import core.models.Location;
 import core.models.Passenger;
 import core.models.Plane;
 import com.formdev.flatlaf.FlatDarkLaf;
+import core.controllers.PassengerController;
+import core.controllers.utils.Response;
 import java.awt.Color;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
@@ -1455,21 +1458,36 @@ public class AirportFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_userActionPerformed
 
     private void registerPassengerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerPassengerBtnActionPerformed
-        // TODO add your handling code here:
-        long id = Long.parseLong(passengerIDTxt.getText());
-        String firstname = passengerFirstNameTxt.getText();
-        String lastname = passengerLastNameTxt.getText();
-        int year = Integer.parseInt(passengerYearTxt.getText());
-        int month = Integer.parseInt(PassengerMonth.getItemAt(PassengerMonth.getSelectedIndex()));
-        int day = Integer.parseInt(passengerDay.getItemAt(passengerDay.getSelectedIndex()));
-        int phoneCode = Integer.parseInt(passengerPhoneCodeTxt.getText());
-        long phone = Long.parseLong(passengerPhoneTxt.getText());
-        String country = passengerCountryTxt.getText();
+ String id = passengerIDTxt.getText();
+    String firstname = passengerFirstNameTxt.getText();
+    String lastname = passengerLastNameTxt.getText();
+    String year = passengerYearTxt.getText();
+    String month = PassengerMonth.getItemAt(PassengerMonth.getSelectedIndex());
+    String day = passengerDay.getItemAt(passengerDay.getSelectedIndex());
+    String phoneCode = passengerPhoneCodeTxt.getText();
+    String phone = passengerPhoneTxt.getText();
+    String country = passengerCountryTxt.getText();
 
-        LocalDate birthDate = LocalDate.of(year, month, day);
+    Response response = PassengerController.registerPassenger(id, firstname, lastname, year, month, day, phoneCode, phone, country);
 
-        this.passengers.add(new Passenger(id, firstname, lastname, birthDate, phoneCode, phone, country));
-        this.userSelect.addItem("" + id);
+    if (response.getStatus() >= 500) {
+        JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
+    } else if (response.getStatus() >= 400) {
+        JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
+    } else {
+        JOptionPane.showMessageDialog(null, response.getMessage(), "Success", JOptionPane.INFORMATION_MESSAGE);
+        // También podés actualizar la lista de selección si hace falta:
+        userSelect.addItem(id);
+    }
+
+    // Limpiar campos
+    passengerIDTxt.setText("");
+    passengerFirstNameTxt.setText("");
+    passengerLastNameTxt.setText("");
+    passengerYearTxt.setText("");
+    passengerPhoneCodeTxt.setText("");
+    passengerPhoneTxt.setText("");
+    passengerCountryTxt.setText("");
     }//GEN-LAST:event_registerPassengerBtnActionPerformed
 
     private void createAirplaneBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createAirplaneBtnActionPerformed
