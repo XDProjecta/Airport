@@ -21,7 +21,7 @@ private ArrayList<Flight> flights = new ArrayList();
     }
 
     @Override
-    public ArrayList getAll() {
+    public ArrayList<Flight> getAll() {
         return flights;
     }
 

@@ -73,8 +73,10 @@ public class PassengerStorage implements StorageInterface<Passenger> {
     }
 
     @Override
-    public ArrayList getAll() {
+    public ArrayList<Passenger> getAll() {
         return passengers;
     }
+
+
 
 }

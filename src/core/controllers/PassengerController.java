@@ -1,83 +1,68 @@
-
-/*package core.controllers;
+package core.controllers;
 
 import core.models.Passenger;
+import core.controllers.utils.Response;
+import core.controllers.utils.Status;
 import core.models.storage.PassengerStorage;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 
 public class PassengerController {
-    private PassengerStorage passengerStorage;
 
-    public PassengerController() {
-        this.passengerStorage = PassengerStorage.getInstance();
-    }
-
-    public Response registerPassenger(Passenger passenger) {
-        Response validation = validatePassenger(passenger);
-        if (validation.getCode() != 200) {
-            return validation;
-        }
-
-        if (passengerStorage.getPassengerById(passenger.getId()) != null) {
-            return new Response(400, "El ID del pasajero ya existe");
-        }
-
-        passengerStorage.addPassenger(passenger);
-        return new Response(200, "Pasajero registrado exitosamente");
-    }
-
-    public Response updatePassengerInfo(Passenger passenger) {
-        Response validation = validatePassenger(passenger);
-        if (validation.getCode() != 200) {
-            return validation;
-        }
-
-        Passenger existing = (Passenger) passengerStorage.getPassengerById(passenger.getId());
-        if (existing == null) {
-            return new Response(404, "Pasajero no encontrado");
-        }
-
-        passengerStorage.updatePassenger(passenger);
-        return new Response(200, "Información del pasajero actualizada");
-    }
-
-    public Response getAllPassengers() {
-        List<Passenger> passengers = passengerStorage.getAllPassengers().stream()
-                .sorted((p1, p2) -> Long.compare(p1.getId(), p2.getId()))
-                .collect(Collectors.toList());
-        return new Response(200, "Lista de pasajeros obtenida", passengers);
-    }
-
-    private Response validatePassenger(Passenger passenger) {
-        if (passenger.getId() < 0 || String.valueOf(passenger.getId()).length() > 15) {
-            return new Response(422, "ID debe ser mayor o igual a 0 y tener máximo 15 dígitos");
-        }
-
-        if (passenger.getFirstname() == null || passenger.getFirstname().trim().isEmpty() ||
-            passenger.getLastname() == null || passenger.getLastname().trim().isEmpty() ||
-            passenger.getEmail() == null || passenger.getEmail().trim().isEmpty()) {
-            return new Response(422, "Todos los campos obligatorios deben estar completos");
-        }
-
+    public static Response registerPassenger(String idStr, String firstname, String lastname, String yearStr,
+                                             String monthStr, String dayStr, String phoneCodeStr,
+                                             String phoneStr, String country) {
         try {
-            LocalDate.parse(passenger.getBirthDate(), DateTimeFormatter.ISO_LOCAL_DATE);
-        } catch (DateTimeParseException e) {
-            return new Response(422, "Fecha de nacimiento inválida. Formato esperado: YYYY-MM-DD");
-        }
+            // Validar campos vacíos
+            if (idStr.isEmpty() || firstname.isEmpty() || lastname.isEmpty() ||
+                yearStr.isEmpty() || monthStr.isEmpty() || dayStr.isEmpty() ||
+                phoneCodeStr.isEmpty() || phoneStr.isEmpty() || country.isEmpty()) {
+                return new Response("All fields must be filled.", Status.BAD_REQUEST);
+            }
 
-        if (passenger.getPhoneCode() < 0 || passenger.getPhoneCode() > 999) {
-            return new Response(422, "Código telefónico debe estar entre 0 y 999");
-        }
+            // Validar tipos numéricos
+            long id = Long.parseLong(idStr);
+            int year = Integer.parseInt(yearStr);
+            int month = Integer.parseInt(monthStr);
+            int day = Integer.parseInt(dayStr);
+            int phoneCode = Integer.parseInt(phoneCodeStr);
+            long phone = Long.parseLong(phoneStr);
 
-        if (passenger.getPhoneNumber() < 0 || String.valueOf(passenger.getPhoneNumber()).length() > 11) {
-            return new Response(422, "Número telefónico debe ser positivo y tener máximo 11 dígitos");
-        }
+            if (id < 0 || id > 999999999) {
+                return new Response("ID must be a number between 0 and 999999999.", Status.BAD_REQUEST);
+            }
 
-        return new Response(200, "Validación exitosa");
+            if (phone < 0 || phoneCode < 0) {
+                return new Response("Phone and code must be positive numbers.", Status.BAD_REQUEST);
+            }
+
+            LocalDate birthDate;
+            try {
+                birthDate = LocalDate.of(year, month, day);
+            } catch (DateTimeParseException e) {
+                return new Response("Invalid birth date.", Status.BAD_REQUEST);
+            }
+
+            // Validar duplicados
+            PassengerStorage storage = PassengerStorage.getInstance();
+            for (Passenger p : storage.getAll()) {
+                if (p.getId() == id) {
+                    return new Response("A passenger with this ID already exists.", Status.BAD_REQUEST);
+                }
+            }
+
+            // Crear y guardar pasajero
+            Passenger passenger = new Passenger(id, firstname, lastname, birthDate, phoneCode, phone, country);
+            storage.add(passenger);
+
+            return new Response("Passenger registered successfully.", Status.OK);
+
+        } catch (NumberFormatException e) {
+            return new Response("ID, date, and phone values must be numeric.", Status.BAD_REQUEST);
+        } catch (Exception e) {
+            return new Response("Unexpected error: " + e.getMessage(), Status.INTERNAL_SERVER_ERROR);
+        }
     }
 }
-*/
+

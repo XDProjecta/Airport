@@ -20,7 +20,7 @@ private ArrayList<Location> locations = new ArrayList();
     }
 
     @Override
-    public ArrayList getAll() {
+    public ArrayList<Location> getAll() {
         return locations;
     }
 
