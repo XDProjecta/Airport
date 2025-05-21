@@ -1476,7 +1476,6 @@ public class AirportFrame extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
     } else {
         JOptionPane.showMessageDialog(null, response.getMessage(), "Success", JOptionPane.INFORMATION_MESSAGE);
-        // También podés actualizar la lista de selección si hace falta:
         userSelect.addItem(id);
     }
 

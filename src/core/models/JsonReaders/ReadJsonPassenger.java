@@ -7,6 +7,7 @@ import org.json.JSONTokener;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ReadJsonPassenger implements JsonReader<Passenger> {
@@ -25,7 +26,7 @@ public class ReadJsonPassenger implements JsonReader<Passenger> {
                     obj.getInt("id"),
                     obj.getString("firstname"),
                     obj.getString("lastname"),
-                    obj.getString("birthDate"),
+                    (LocalDate)obj.get("birthDate"),
                     obj.getInt("countryPhoneCode"),
                     obj.getInt("phone"),
                     obj.getString("country")

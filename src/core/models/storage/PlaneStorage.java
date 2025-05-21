@@ -20,7 +20,7 @@ public class PlaneStorage implements StorageInterface<Plane> {
     }
 
     @Override
-    public ArrayList getAll() {
+    public ArrayList<Plane> getAll() {
         return planes;
     }
 
