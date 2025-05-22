@@ -1,6 +1,5 @@
 package core.models.JsonReaders;
 
-import core.models.JsonReaders.JsonReader;
 import core.models.Flight;
 import core.models.Location;
 import core.models.storage.PlaneStorage;

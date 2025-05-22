@@ -18,7 +18,7 @@ public class PassengerController {
             if (idStr.isEmpty() || firstname.isEmpty() || lastname.isEmpty() ||
                 yearStr.isEmpty() || monthStr.isEmpty() || dayStr.isEmpty() ||
                 phoneCodeStr.isEmpty() || phoneStr.isEmpty() || country.isEmpty()) {
-                return new Response("All fields must be filled.", Status.BAD_REQUEST);
+                return new Response("All fields must be filled", Status.BAD_REQUEST);
             }
 
             // Validar tipos numéricos
@@ -65,4 +65,4 @@ public class PassengerController {
         }
     }
 }
-
+    
