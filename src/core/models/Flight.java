@@ -48,9 +48,15 @@ public class Flight {
         this.plane.addFlight(this);
     }
     
-    public void addPassenger(Passenger passenger) {
-        this.passengers.add(passenger);
+    public boolean addPassenger(Passenger passenger) {
+        if (passenger == null) return false;
+            if (!passengers.contains(passenger)) {
+                passengers.add(passenger);
+            return true;
     }
+    return false;
+}
+
     
     public String getId() {
         return id;

@@ -14,6 +14,15 @@ private ArrayList<Flight> flights = new ArrayList();
         }
         return instance;
     }
+        public Flight getById(String id) {
+            for (Flight flight : this.getAll()) {
+                if (flight.getId().equals(id)) {
+                return flight;
+        }
+    }
+    return null;
+}
+
         
     @Override
     public void add (Flight flight) {

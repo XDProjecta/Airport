@@ -29,12 +29,17 @@ public class PassengerController {
             int phoneCode = Integer.parseInt(phoneCodeStr);
             long phone = Long.parseLong(phoneStr);
 
-            if (id < 0 || id > 999999999) {
-                return new Response("ID must be a number between 0 and 999999999.", Status.BAD_REQUEST);
+            // Validar rangos
+            if (id < 0 || id > 99999999) {
+               return new Response("ID must be a positive number with up to 15 digits.", Status.BAD_REQUEST);
             }
 
-            if (phone < 0 || phoneCode < 0) {
-                return new Response("Phone and code must be positive numbers.", Status.BAD_REQUEST);
+            if (phoneCode < 0 || phoneCode > 999) {
+               return new Response("Phone code must be a number between 0 and 999.", Status.BAD_REQUEST);
+            }
+
+            if (phone < 0 || phone > 999999999) {
+               return new Response("Phone number must be a number between 0 and 999999999.", Status.BAD_REQUEST);
             }
 
             LocalDate birthDate;
