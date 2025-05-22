@@ -2,10 +2,22 @@ package core.controllers;
 
 import core.controllers.utils.Response;
 import core.controllers.utils.Status;
+import core.models.JsonReaders.ReadJsonLocation;
 import core.models.Location;
 import core.models.storage.LocationStorage;
+import java.util.ArrayList;
 
 public class LocationController {
+    
+    public static void loadLocationsFromJson() {
+        ReadJsonLocation reader = new ReadJsonLocation();
+        ArrayList<Location> locations = reader.read("json/locations.json");
+
+        LocationStorage storage = LocationStorage.getInstance();
+        for (Location loc : locations) {
+            storage.add(loc);
+        }
+    }
 
     public static Response registerLocation(String id, String name, String city, String country, String latitudeStr, String longitudeStr) {
         try {

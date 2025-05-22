@@ -5,12 +5,17 @@
 package main;
 
 import com.formdev.flatlaf.FlatDarkLaf;
+import core.controllers.FlightController;
+import core.controllers.LocationController;
+import core.controllers.PassengerController;
+import core.controllers.PlaneController;
 import core.views.AirportFrame;
 import javax.swing.UIManager;
 
 
 public class Main {
     public static void main(String args[]) {
+       
         System.setProperty("flatlaf.useNativeLibrary", "false");
 
         try {
@@ -21,6 +26,12 @@ public class Main {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+
+                LocationController.loadLocationsFromJson();
+                PlaneController.loadPlanesFromJson();
+                PassengerController.loadPassengersFromJson();
+                FlightController.loadFlightsFromJson();
+                
                 new AirportFrame().setVisible(true);
             }
         });

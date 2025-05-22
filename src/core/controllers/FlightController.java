@@ -3,13 +3,25 @@ package core.controllers;
 import core.controllers.utils.Response;
 import core.controllers.utils.Status;
 import core.models.*;
+import core.models.JsonReaders.ReadJsonFlight;
 import core.models.storage.FlightStorage;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 public class FlightController {
+    
+  public static void loadFlightsFromJson() {
+        ReadJsonFlight reader = new ReadJsonFlight();
+        ArrayList<Flight> flights = reader.read("json/flights.json");
+
+        FlightStorage storage = FlightStorage.getInstance();
+        for (Flight fli : flights) {
+            storage.add(fli);
+        }
+    }
 
     public static Response registerFlight(String id, Plane plane, Location departure,
                                           Location arrival, Location scale,

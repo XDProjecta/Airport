@@ -11,6 +11,7 @@ import org.json.JSONTokener;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -31,7 +32,10 @@ public class ReadJsonFlight implements JsonReader<Flight> {
                 String departureLocationId = obj.getString("departureLocation");
                 String arrivalLocationId = obj.getString("arrivalLocation");
                 String scaleLocationId = obj.optString("scaleLocation", null);
-                LocalDateTime departureDate = (LocalDateTime)obj.get("departureDate");
+                String departureStr = obj.getString("departureDate"); /* esta vaina toca hacerla porque hay un error en el parseo
+                en el json nos dan un string, acá leemos string
+               nos da esta vaina: "2025-06-01T14:30:00" en string*/
+                LocalDateTime departureDate = LocalDateTime.parse(departureStr); // como el constructor está en LocalDate, toca volver a parsear
                 int hoursArrival = obj.getInt("hoursDurationArrival");
                 int minutesArrival = obj.getInt("minutesDurationArrival");
                 int hoursScale = obj.getInt("hoursDurationScale");

@@ -22,14 +22,19 @@ public class ReadJsonPassenger implements JsonReader<Passenger> {
             for (int i = 0; i < array.length(); i++) {
                 JSONObject obj = array.getJSONObject(i);
 
+                String birthStr = obj.getString("birthDate"); /* esta vaina toca hacerla porque hay un error en el parseo
+                el json nos da un string, entonces recibimos un string "1990-04-15"*/
+                LocalDate birthDate = LocalDate.parse(birthStr);
+                // toca parsear acá porque el constructor de passenger está es con localdate
+
                 Passenger p = new Passenger(
-                    obj.getInt("id"),
-                    obj.getString("firstname"),
-                    obj.getString("lastname"),
-                    (LocalDate)obj.get("birthDate"),
-                    obj.getInt("countryPhoneCode"),
-                    obj.getInt("phone"),
-                    obj.getString("country")
+                        obj.getInt("id"),
+                        obj.getString("firstname"),
+                        obj.getString("lastname"),
+                        birthDate,
+                        obj.getInt("countryPhoneCode"),
+                        obj.getInt("phone"),
+                        obj.getString("country")
                 );
 
                 passengers.add(p);

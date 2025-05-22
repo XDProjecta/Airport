@@ -2,14 +2,26 @@ package core.controllers;
 
 import core.controllers.utils.Response;
 import core.controllers.utils.Status;
+import core.models.JsonReaders.ReadJsonPlane;
 import core.models.Plane;
 import core.models.storage.PlaneStorage;
 
 import java.time.Year;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class PlaneController {
+    
+    public static void loadPlanesFromJson() {
+        ReadJsonPlane reader = new ReadJsonPlane();
+        ArrayList<Plane> planes = reader.read("json/planes.json");
+
+        PlaneStorage storage = PlaneStorage.getInstance();
+        for (Plane plane : planes) {
+            storage.add(plane);
+        }
+    }
 
     public static Response registerPlane(String id, String brand, String model, String capacityStr, String airline,
                                          String yearStr, String type) {

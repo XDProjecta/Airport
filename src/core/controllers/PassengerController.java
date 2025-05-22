@@ -3,12 +3,24 @@ package core.controllers;
 import core.models.Passenger;
 import core.controllers.utils.Response;
 import core.controllers.utils.Status;
+import core.models.JsonReaders.ReadJsonPassenger;
 import core.models.storage.PassengerStorage;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 
 public class PassengerController {
+    
+    public static void loadPassengersFromJson() {
+        ReadJsonPassenger reader = new ReadJsonPassenger();
+        ArrayList<Passenger> passengers = reader.read("json/passengers.json");
+
+        PassengerStorage storage = PassengerStorage.getInstance();
+        for (Passenger pas : passengers) {
+            storage.add(pas);
+        }
+    }
 
     public static Response registerPassenger(String idStr, String firstname, String lastname, String yearStr,
                                              String monthStr, String dayStr, String phoneCodeStr,
