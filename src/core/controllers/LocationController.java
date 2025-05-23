@@ -6,6 +6,9 @@ import core.models.JsonReaders.ReadJsonLocation;
 import core.models.Location;
 import core.models.storage.LocationStorage;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class LocationController {
     
@@ -35,6 +38,7 @@ public class LocationController {
             double latitude = Double.parseDouble(latitudeStr);
             double longitude = Double.parseDouble(longitudeStr);
 
+
             // Validar rangos y decimales
             if (latitude < -90 || latitude > 90 || !hasAtMostFourDecimals(latitude)) {
                 return new Response("Latitude must be in range [-90, 90] with at most 4 decimal places.", Status.BAD_REQUEST);
@@ -63,6 +67,24 @@ public class LocationController {
             return new Response("Unexpected error: " + e.getMessage(), Status.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    public static Response getAllLocationsSortedByCity() {
+    try {
+        LocationStorage storage = LocationStorage.getInstance();
+
+        List<Location> locations = storage.getAll();
+        List<Location> copies = new ArrayList<>();
+        for (Location loc : locations) {
+            copies.add(loc.copy());
+        }
+        copies.sort(Comparator.comparing(Location::getCity));
+
+        return new Response("Locations retrieved successfully.", Status.OK, copies);
+
+    } catch (Exception e) {
+        return new Response("Unexpected error: " + e.getMessage(), Status.INTERNAL_SERVER_ERROR);
+    }
+}
 
     private static boolean hasAtMostFourDecimals(double value) {
         String[] parts = String.valueOf(value).split("\\.");

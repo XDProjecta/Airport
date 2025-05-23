@@ -9,6 +9,9 @@ import core.models.storage.PassengerStorage;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class PassengerController {
     
@@ -74,6 +77,8 @@ public class PassengerController {
             storage.add(passenger);
 
             return new Response("Passenger registered successfully.", Status.OK);
+            
+            
 
         } catch (NumberFormatException e) {
             return new Response("ID, date, and phone values must be numeric.", Status.BAD_REQUEST);
@@ -81,5 +86,21 @@ public class PassengerController {
             return new Response("Unexpected error: " + e.getMessage(), Status.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    public static Response getAllPassengersSorted() {
+    try {
+        PassengerStorage storage = PassengerStorage.getInstance();
+
+        List<Passenger> sorted = storage.getAll().stream()
+            .map(Passenger::copy) // Patrón Prototype
+            .sorted(Comparator.comparing(Passenger::getId)) // Ordena por ID; puedes cambiar a getLastname()
+            .collect(Collectors.toList());
+
+        return new Response("Passengers retrieved successfully.", Status.OK, sorted);
+    } catch (Exception e) {
+        return new Response("Unexpected error: " + e.getMessage(), Status.INTERNAL_SERVER_ERROR);
+    }
+}
+
 }
     

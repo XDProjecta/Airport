@@ -16,6 +16,8 @@ public class Location {
     private String airportCountry;
     private double airportLatitude;
     private double airportLongitude;
+    private String city;
+
 
     public Location(String airportId, String airportName, String airportCity, String airportCountry, double airportLatitude, double airportLongitude) {
         this.airportId = airportId;
@@ -50,4 +52,12 @@ public class Location {
         return airportLongitude;
     }
     
+    public String getCity() {
+        return city;
+    }
+    
+    public Location copy() {
+        return new Location(this.airportId, this.airportName, this.airportCity, this.airportCountry, this.airportLatitude, this.airportLongitude);
+    }
+   
 }

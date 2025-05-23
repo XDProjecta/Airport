@@ -9,7 +9,9 @@ import core.models.storage.PlaneStorage;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PlaneController {
     
@@ -69,6 +71,21 @@ public class PlaneController {
             return new Response("Unexpected error: " + e.getMessage(), Status.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    public static Response getAllPlanesSortedById() {
+    try {
+        PlaneStorage storage = PlaneStorage.getInstance();
+
+        List<Plane> sorted = storage.getAll().stream()
+            .map(Plane::copy) // patrón Prototype
+            .sorted(Comparator.comparing(Plane::getId))
+            .collect(Collectors.toList());
+
+        return new Response("Planes retrieved successfully.", Status.OK, sorted);
+    } catch (Exception e) {
+        return new Response("Unexpected error: " + e.getMessage(), Status.INTERNAL_SERVER_ERROR);
+    }
+}
 }
 
 

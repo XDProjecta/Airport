@@ -53,4 +53,10 @@ public class Plane {
         return flights.size();
     }
     
+    public Plane copy() {
+    Plane copy = new Plane(this.id, this.brand, this.model, this.maxCapacity, this.airline);
+    // No copiamos la lista de vuelos para evitar referencias cruzadas.
+    return copy;
+    }
+
 }

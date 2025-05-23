@@ -134,7 +134,18 @@ public class Passenger {
         return flights.size();
     }
 
-    
-
-    
+    public Passenger copy() {
+    Passenger copy = new Passenger(
+        this.id,
+        this.firstname,
+        this.lastname,
+        this.birthDate,
+        this.countryPhoneCode,
+        this.phone,
+        this.country
+    );
+        copy.setEmail(this.email);
+        copy.setPhoneCode(this.PhoneCode);
+            return copy;
+        }   
 }
