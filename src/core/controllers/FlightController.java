@@ -121,18 +121,21 @@ public class FlightController {
     }
 
     public static Response getAllFlightsSortedByDate() {
-        try {
-            List<Flight> sortedFlights = FlightStorage.getInstance().getAll();
-            sortedFlights.sort(Comparator.comparing(Flight::getDepartureDate));
+    try {
+        List<Flight> sortedFlights = new ArrayList<>(FlightStorage.getInstance().getAll());
+        sortedFlights.sort(Comparator.comparing(Flight::getDepartureDate));
 
-            // FALTA Patrón Prototype (copias) gabriel cachón
+        // Patrón Prototype: crear copias de los vuelos
+        List<Flight> flightCopies = sortedFlights.stream()
+                .map(Flight::copy)
+                .toList();
 
-            
-            return new Response("Flights retrieved successfully.", Status.OK);
-        } catch (Exception e) {
-            return new Response("Unexpected error: " + e.getMessage(), Status.INTERNAL_SERVER_ERROR);
-        }
+        return new Response("Flights retrieved successfully.", Status.OK, flightCopies);
+            } catch (Exception e) {
+                return new Response("Unexpected error: " + e.getMessage(), Status.INTERNAL_SERVER_ERROR);
     }
+}
+
 }
 
 

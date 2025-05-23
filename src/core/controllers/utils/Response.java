@@ -14,7 +14,7 @@ public class Response {
         this.data = null;
     }
 
-    public Response(String message, int status, double data) {
+    public Response(String message, int status, Object data) {
         this.message = message;
         this.status = status;
         this.data = data;

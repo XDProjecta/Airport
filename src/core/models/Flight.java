@@ -57,6 +57,7 @@ public class Flight {
     return false;
 }
 
+
     
     public String getId() {
         return id;
@@ -114,4 +115,39 @@ public class Flight {
         return passengers.size();
     }
     
+    public Flight copy() {
+    Flight copy;
+    if (this.scaleLocation == null) {
+        copy = new Flight(
+            this.id,
+            this.plane,
+            this.departureLocation,
+            this.arrivalLocation,
+            this.departureDate,
+            this.hoursDurationArrival,
+            this.minutesDurationArrival
+        );
+    } else {
+        copy = new Flight(
+            this.id,
+            this.plane,
+            this.departureLocation,
+            this.scaleLocation,
+            this.arrivalLocation,
+            this.departureDate,
+            this.hoursDurationArrival,
+            this.minutesDurationArrival,
+            this.hoursDurationScale,
+            this.minutesDurationScale
+        );
+    }
+
+    // Copia los pasajeros (sin modificar el original)
+    for (Passenger p : this.passengers) {
+        copy.passengers.add(p);
+    }
+
+    return copy;
+}
+
 }
