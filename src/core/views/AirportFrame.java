@@ -13,6 +13,7 @@ import core.controllers.FlightController;
 import core.controllers.LocationController;
 import core.controllers.PassengerController;
 import core.controllers.PlaneController;
+import core.controllers.UpdatePassengerController;
 import core.controllers.utils.Response;
 import core.controllers.utils.sorters.LocationSorter;
 import core.controllers.utils.sorters.PassengerSorter;
@@ -1660,32 +1661,37 @@ public class AirportFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_createFlightBtnActionPerformed
 
     private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
-        // TODO add your handling code here:
-        long id = Long.parseLong(updateIdTxt.getText());
-        String firstname = updateFirstNameTxt.getText();
-        String lastname = updateLastNameTxt.getText();
-        int year = Integer.parseInt(updateYearTxt.getText());
-        int month = Integer.parseInt(passengerMonth.getItemAt(updateMonthTxt.getSelectedIndex()));
-        int day = Integer.parseInt(passengerDay.getItemAt(updateDayTxt.getSelectedIndex()));
-        int phoneCode = Integer.parseInt(updatePhoneCodeTxt.getText());
-        long phone = Long.parseLong(updatePhoneTxt.getText());
-        String country = updateCountryTxt.getText();
+           // Obtener todos los valores directamente desde los componentes del formulario
+    String id = updateIdTxt.getText();
+    String firstname = updateFirstNameTxt.getText();
+    String lastname = updateLastNameTxt.getText();
+    String year = updateYearTxt.getText();
+    String month = updateMonthTxt.getItemAt(updateMonthTxt.getSelectedIndex());
+    String day = updateDayTxt.getItemAt(updateDayTxt.getSelectedIndex());
+    String phoneCode = updatePhoneCodeTxt.getText();
+    String phone = updatePhoneTxt.getText();
+    String country = updateCountryTxt.getText();
 
-        LocalDate birthDate = LocalDate.of(year, month, day);
+    Response response = UpdatePassengerController.passengerUpdateRegistration(id, firstname, lastname, year, month, day, phoneCode, phone, country);
 
-        Passenger passenger = null;
-        for (Passenger p : this.passengers) {
-            if (p.getId() == id) {
-                passenger = p;
-            }
-        }
+    if (response.getStatus() >= 500) {
+        JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
+    } else if (response.getStatus() >= 400) {
+        JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
+    } else {
+        JOptionPane.showMessageDialog(null, response.getMessage(), "Success", JOptionPane.INFORMATION_MESSAGE);
 
-        passenger.setFirstname(firstname);
-        passenger.setLastname(lastname);
-        passenger.setBirthDate(birthDate);
-        passenger.setCountryPhoneCode(phoneCode);
-        passenger.setPhone(phone);
-        passenger.setCountry(country);
+        // Limpiar campos
+        updateIdTxt.setText("");
+        updateFirstNameTxt.setText("");
+        updateLastNameTxt.setText("");
+        updateYearTxt.setText("");
+        updateMonthTxt.setSelectedIndex(0);
+        updateDayTxt.setSelectedIndex(0);
+        updatePhoneCodeTxt.setText("");
+        updatePhoneTxt.setText("");
+        updateCountryTxt.setText("");
+    }
     }//GEN-LAST:event_updateBtnActionPerformed
 
     private void addFlightBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFlightBtnActionPerformed
