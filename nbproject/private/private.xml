@@ -13,6 +13,8 @@
             <file>file:/C:/Users/jmanu/Documents/Airport/src/core/models/Location.java</file>
             <file>file:/C:/Users/jmanu/Documents/Airport/src/core/models/Passenger.java</file>
             <file>file:/C:/Users/jmanu/Documents/Airport/src/core/models/Plane.java</file>
+            <file>file:/C:/Users/jmanu/Documents/Airport/src/core/controllers/updatePassengerController.java</file>
+            <file>file:/C:/Users/jmanu/Documents/Airport/src/core/models/storage/PassengerStorage.java</file>
         </group>
     </open-files>
 </project-private>
