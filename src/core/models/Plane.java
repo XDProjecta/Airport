@@ -20,7 +20,7 @@ public class Plane {
         this.airline = airline;
         this.flights = new ArrayList<>();
     }
-//ABSTRACT CLASS OR INTERFACE
+//en este caso no es necesario sacarla less GOO
     public void addFlight(Flight flight) {
         this.flights.add(flight);
     }
