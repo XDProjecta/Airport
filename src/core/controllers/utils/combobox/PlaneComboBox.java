@@ -14,14 +14,14 @@ public class PlaneComboBox {
        public static Response addItems(JComboBox<String> comboBox) {
         try {
             ReadJsonPlane jsonPlanes = new ReadJsonPlane();
-            ArrayList<Plane> planes = jsonPlanes.read("src\\json\\planes.json");
+            ArrayList<Plane> planes = jsonPlanes.read("json/planes.json");
             comboBox.removeAllItems();
             Collections.sort(planes, Comparator.comparing(Plane::getId));
             comboBox.addItem("Plane");
             for (Plane plane : planes) {
                 comboBox.addItem("" + plane.getId());
             }
-            return new Response("File upload successfully", Status.CREATED);
+            return new Response("File uploaded successfully", Status.CREATED);
         } catch (Exception ex) {
             return new Response("Unexpected", Status.INTERNAL_SERVER_ERROR);
         }

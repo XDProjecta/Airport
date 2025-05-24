@@ -9,10 +9,6 @@ import core.models.storage.FlightStorage;
 import core.models.storage.PassengerStorage;
 import java.util.ArrayList;
 
-/**
- *
- * @author Laura
- */
 public class PassengerFlightController {
 
     public static Response addFlight(String id, String idFlight) {

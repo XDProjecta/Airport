@@ -7,10 +7,6 @@ import core.models.FlightRelations.DelayFlight;
 import core.models.storage.FlightStorage;
 import java.util.ArrayList;
 
-/**
- *
- * @author Laura
- */
 public class DelayFlightController {
 
     public static Response delayFlight(String id, String hour, String minute) {
