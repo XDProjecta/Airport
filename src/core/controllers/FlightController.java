@@ -23,11 +23,7 @@ public class FlightController {
         }
     }
 
-    public static Response registerFlight(String id, Plane plane, Location departure,
-                                          Location arrival, Location scale,
-                                          LocalDateTime departureDate,
-                                          int hoursDurationsArrival, int minutesDurationsArrival,
-                                          int hoursDurationsScale, int minutesDurationsScale) {
+    public static Response registerFlight(String id, String plane, String departure, String arrival, String scale, String departureDate, String hoursDurationsArrival, String minutesDurationsArrival, String hoursDurationsScale, String minutesDurationsScale, String hoursDurationsArrival1, String minutesDurationsArrival1, String hoursDurationsScale1, String minutesDurationsScale1) {
         try {
             // Validaciones básicas
             if (id == null || id.isEmpty() || !id.matches("[A-Z]{3}\\d{3}")) {
@@ -75,7 +71,7 @@ public class FlightController {
         }
     }
 
-    public static Response delayFlight(String flightId, int delayHours, int delayMinutes) {
+   /* public static Response delayFlight(String flightId, int delayHours, int delayMinutes) {
         try {
             if (delayHours < 0 || delayMinutes < 0 || (delayHours == 0 && delayMinutes == 0)) {
                 return new Response("Delay time must be greater than 00:00.", Status.BAD_REQUEST);
@@ -134,7 +130,7 @@ public class FlightController {
             } catch (Exception e) {
                 return new Response("Unexpected error: " + e.getMessage(), Status.INTERNAL_SERVER_ERROR);
     }
-}
+}*/
 
 }
 

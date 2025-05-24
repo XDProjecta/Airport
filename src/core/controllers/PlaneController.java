@@ -24,7 +24,7 @@ public class PlaneController {
             storage.add(plane);
         }
     }
-
+//  falta parsear acá jijiji se me olvidó, creo no sé horita lo veo
     public static Response registerPlane(String id, String brand, String model, String capacityStr, String airline,
                                          String yearStr, String type) {
         try {
