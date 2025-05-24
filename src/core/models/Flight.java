@@ -28,7 +28,7 @@ public class Flight {
         this.departureDate = departureDate;
         this.hoursDurationArrival = hoursDurationArrival;
         this.minutesDurationArrival = minutesDurationArrival;
-        
+        //solucionar error aquí 😭😭😭😭 :(((
         this.plane.addFlight(this);
     }
 
@@ -47,17 +47,10 @@ public class Flight {
         
         this.plane.addFlight(this);
     }
-    
-    public boolean addPassenger(Passenger passenger) {
-        if (passenger == null) return false;
-            if (!passengers.contains(passenger)) {
-                passengers.add(passenger);
-            return true;
+    // esto hay q sacarlo? toca ver cómo arreglar la relación entre flight, plane y passenger cuidadosamente.
+    public void addPassenger(Passenger passenger) {
+        this.passengers.add(passenger);
     }
-    return false;
-}
-
-
     
     public String getId() {
         return id;

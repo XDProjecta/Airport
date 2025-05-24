@@ -1,17 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package core.models;
 
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 
-/**
- *
- * @author edangulo
- */
 public class Passenger {
     
     private final long id;
@@ -36,10 +29,6 @@ public class Passenger {
         this.PhoneCode = PhoneCode;
         this.country = country;
         this.flights = new ArrayList<>();
-    }
-//APARTE, ABSTRACT CLASS OR INTERFACE
-    public void addFlight(Flight flight) {
-        this.flights.add(flight);
     }
     
     public long getId() {
