@@ -5,11 +5,6 @@
 package main;
 
 import com.formdev.flatlaf.FlatDarkLaf;
-import core.controllers.utils.combobox.JsonComboBox;
-import core.controllersMain.FlightController;
-import core.controllersMain.LocationController;
-import core.controllersMain.PassengerController;
-import core.controllersMain.PlaneController;
 import core.models.JsonReaders.JsonInitializer;
 import core.views.AirportFrame;
 import javax.swing.UIManager;

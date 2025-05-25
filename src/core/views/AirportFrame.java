@@ -1610,7 +1610,6 @@ public class AirportFrame extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, response.getMessage(), "Success", JOptionPane.INFORMATION_MESSAGE);
 
-            // Limpiar campos de texto
             airportIdTxt.setText("");
             airportNameTxt.setText("");
             airportCityTxt.setText("");
@@ -1618,7 +1617,6 @@ public class AirportFrame extends javax.swing.JFrame {
             airportLatitudeTxt.setText("");
             airportLongitud.setText("");
 
-            // Agregar nuevos elementos desde el storage ordenado
             ArrayList<Location> locations = LocationSorter.getSortedLocations();
             departureLocationComBox.addItem("Location");
             flightArrivalLocationComBox.addItem("Location");
@@ -1696,7 +1694,7 @@ public class AirportFrame extends javax.swing.JFrame {
         String phone = updatePhoneTxt.getText();
         String country = updateCountryTxt.getText();
 
-        Response response = UpdatePassengerController.passengerUpdateRegistration(id, firstname, lastname, year, month, day, phoneCode, phone, country);
+        Response response = UpdatePassengerController.passengerUpdateRegister(id, firstname, lastname, year, month, day, phoneCode, phone, country);
 
         if (response.getStatus() >= 500) {
             JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
