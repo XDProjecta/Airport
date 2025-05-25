@@ -7,7 +7,6 @@ import core.models.FlightRelations.PassengerFlight;
 import core.models.Passenger;
 import core.models.storage.FlightStorage;
 import core.models.storage.PassengerStorage;
-import java.util.ArrayList;
 
 public class PassengerFlightController {
 

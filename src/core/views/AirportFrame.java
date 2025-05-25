@@ -1703,7 +1703,6 @@ public class AirportFrame extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, response.getMessage(), "Success", JOptionPane.INFORMATION_MESSAGE);
 
-            // Limpiar campos
             updateIdTxt.setText("");
             updateFirstNameTxt.setText("");
             updateLastNameTxt.setText("");
