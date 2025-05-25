@@ -10,13 +10,14 @@ import core.controllersMain.FlightController;
 import core.controllersMain.LocationController;
 import core.controllersMain.PassengerController;
 import core.controllersMain.PlaneController;
+import core.models.JsonReaders.JsonInitializer;
 import core.views.AirportFrame;
 import javax.swing.UIManager;
 
-
 public class Main {
+
     public static void main(String args[]) {
-       
+
         System.setProperty("flatlaf.useNativeLibrary", "false");
 
         try {
@@ -27,7 +28,7 @@ public class Main {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JsonComboBox.addJson();
+                JsonInitializer.loadAll();
                 new AirportFrame().setVisible(true);
             }
         });

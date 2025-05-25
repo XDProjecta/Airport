@@ -11,7 +11,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class LocationController {
-    
+
+    public static void loadLocationsFromJson() {
+        ReadJsonLocation reader = new ReadJsonLocation();
+        ArrayList<Location> locations = reader.read("json/locations.json");
+        LocationStorage storage = LocationStorage.getInstance();
+        for (Location loc : locations) {
+            storage.add(loc);
+        }
+    }
+
     public static Response registerLocation(String id, String name, String city, String country, String latitudeStr, String longitudeStr) {
         try {
             // Validar campos vacíos
@@ -27,7 +36,6 @@ public class LocationController {
             // Parsear latitud y longitud
             double latitude = Double.parseDouble(latitudeStr);
             double longitude = Double.parseDouble(longitudeStr);
-
 
             // Validar rangos y decimales
             if (latitude < -90 || latitude > 90 || !hasAtMostFourDecimals(latitude)) {
@@ -57,10 +65,9 @@ public class LocationController {
             return new Response("Unexpected error: " + e.getMessage(), Status.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     private static boolean hasAtMostFourDecimals(double value) {
         String[] parts = String.valueOf(value).split("\\.");
         return parts.length == 1 || parts[1].length() <= 4;
     }
 }
-
