@@ -1,29 +1,15 @@
-package core.controllers;
+package core.controllersMain;
 
 import core.models.Passenger;
 import core.controllers.utils.Response;
 import core.controllers.utils.Status;
-import core.models.JsonReaders.ReadJsonPassenger;
 import core.models.storage.PassengerStorage;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
+
 
 public class PassengerController {
-
-    public static void loadPassengersFromJson() {
-        ReadJsonPassenger reader = new ReadJsonPassenger();
-        ArrayList<Passenger> passengers = reader.read("json/passengers.json");
-
-        PassengerStorage storage = PassengerStorage.getInstance();
-        for (Passenger pas : passengers) {
-            storage.add(pas);
-        }
-    }
 
     public static Response registerPassenger(String idStr, String firstname, String lastname, String yearStr,
                                              String monthStr, String dayStr, String phoneCodeStr,
@@ -74,7 +60,7 @@ public class PassengerController {
             Passenger passenger = new Passenger(id, firstname, lastname, birthDate, phoneCode, phone, country);
             storage.add(passenger);
 
-            return new Response("Passenger registered successfully.", Status.OK);
+            return new Response("Plane registered", Status.OK, passenger.copy());
 
         } catch (NumberFormatException e) {
             return new Response("ID, date, and phone values must be numeric.", Status.BAD_REQUEST);

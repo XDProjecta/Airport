@@ -1,4 +1,4 @@
-package core.controllers;
+package core.controllersMain;
 
 import core.controllers.utils.Response;
 import core.controllers.utils.Status;
@@ -13,16 +13,6 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 public class FlightController {
-
-    public static void loadFlightsFromJson() {
-        ReadJsonFlight reader = new ReadJsonFlight();
-        ArrayList<Flight> flights = reader.read("json/flights.json");
-
-        FlightStorage storage = FlightStorage.getInstance();
-        for (Flight fli : flights) {
-            storage.add(fli);
-        }
-    }
 
     public static Response registerFlight(
             String id,
@@ -119,7 +109,7 @@ public class FlightController {
 
             // Guardar vuelo
             storage.add(flight);
-            return new Response("Flight registered successfully.", Status.OK);
+            return new Response("Plane registered", Status.OK, flight.copy());
 
         } catch (NumberFormatException e) {
             return new Response("Numeric values are required in date and duration fields.", Status.BAD_REQUEST);

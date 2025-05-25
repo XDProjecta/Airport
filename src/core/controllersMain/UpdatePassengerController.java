@@ -1,5 +1,5 @@
 
-package core.controllers;
+package core.controllersMain;
 
 import core.controllers.utils.Response;
 import core.controllers.utils.Status;
@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
-public class updatePassengerController {
+public class UpdatePassengerController {
 
 
     public static Response passengerUpdateRegistration(String idStr, String firstNameStr, String lastNameStr, String yearStr, String monthStr, String dayStr, String codeStr, String phoneStr, String countryStr) {

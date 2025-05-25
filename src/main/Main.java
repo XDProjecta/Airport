@@ -5,10 +5,10 @@
 package main;
 
 import com.formdev.flatlaf.FlatDarkLaf;
-import core.controllers.FlightController;
-import core.controllers.LocationController;
-import core.controllers.PassengerController;
-import core.controllers.PlaneController;
+import core.controllersMain.FlightController;
+import core.controllersMain.LocationController;
+import core.controllersMain.PassengerController;
+import core.controllersMain.PlaneController;
 import core.views.AirportFrame;
 import javax.swing.UIManager;
 

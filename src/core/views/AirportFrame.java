@@ -9,15 +9,15 @@ import core.models.Location;
 import core.models.Passenger;
 import core.models.Plane;
 import com.formdev.flatlaf.FlatDarkLaf;
-import core.controllers.FlightController;
-import core.controllers.LocationController;
-import core.controllers.PassengerController;
-import core.controllers.PlaneController;
+import core.controllersMain.FlightController;
+import core.controllersMain.LocationController;
+import core.controllersMain.PassengerController;
+import core.controllersMain.PlaneController;
 import core.controllers.Tables.FlightTableController;
 import core.controllers.Tables.LocationTableController;
 import core.controllers.Tables.PassengerTableController;
 import core.controllers.Tables.PlaneTableController;
-import core.controllers.updatePassengerController;
+import core.controllersMain.UpdatePassengerController;
 import core.controllers.utils.Response;
 import core.controllers.utils.combobox.FlightComboBox;
 import core.controllers.utils.combobox.JsonComboBox;
@@ -80,20 +80,13 @@ public class AirportFrame extends javax.swing.JFrame {
     }
 
     private void uploadItemsToComboBox() {
-        // ComboBox de usuarios (pasajeros)
-        Response responsePassenger = PassengerComboBox.addItems(this.userSelect);
-
-        // ComboBox de aviones 
-        Response responsePlane = PlaneComboBox.addItems(this.planeComBox);
-
-        // ComboBox de vuelos (para crear vuelos, registrar retrasos, etc.)
-        Response responseFlightCreate = FlightComboBox.addItems(this.addFlightIdComBox);
-        Response responseFlightDelay = FlightComboBox.addItems(this.delayFlightIdComBox);
-
-        // ComboBox de ubicaciones (origen, destino, y escala)
-        Response responseDeparture = LocationComboBox.addItems(this.departureLocationComBox);
-        Response responseArrival = LocationComboBox.addItems(this.flightArrivalLocationComBox);
-        Response responseScale = LocationComboBox.addItems(this.flightScaleLocationComBox);
+        PassengerComboBox.addItems(userSelect);
+        PlaneComboBox.addItems(planeComBox);
+        FlightComboBox.addItems(addFlightIdComBox);
+        FlightComboBox.addItems(delayFlightIdComBox);
+        LocationComboBox.addItems(departureLocationComBox);
+        LocationComboBox.addItems(flightArrivalLocationComBox);
+        LocationComboBox.addItems(flightScaleLocationComBox);
     }
 
     private void blockPanels() {
@@ -1574,7 +1567,7 @@ public class AirportFrame extends javax.swing.JFrame {
         String model = airplaneModelTxt.getText();
         String maxCapacity = airplaneCapacityTxt.getText();
         String airline = airplaneAirline.getText();
-        Response response = PlaneController.registerPlane(id, brand, model, maxCapacity, airline, brand, model);
+        Response response = PlaneController.registerPlane(id, brand, model, maxCapacity, airline);
 
         if (response.getStatus() >= 500) {
             JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
@@ -1709,7 +1702,7 @@ public class AirportFrame extends javax.swing.JFrame {
         String phone = updatePhoneTxt.getText();
         String country = updateCountryTxt.getText();
 
-        Response response = updatePassengerController.passengerUpdateRegistration(id, firstname, lastname, year, month, day, phoneCode, phone, country);
+        Response response = UpdatePassengerController.passengerUpdateRegistration(id, firstname, lastname, year, month, day, phoneCode, phone, country);
 
         if (response.getStatus() >= 500) {
             JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
