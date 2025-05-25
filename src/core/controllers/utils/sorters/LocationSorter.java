@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class LocationSorter {
-    public static ArrayList<Location> getSortedLocationCopies() {
+    public static ArrayList<Location> getSortedLocations() {
         ArrayList<Location> locations = LocationStorage.getInstance().getAll();
         ArrayList<Location> sortedCopies = new ArrayList<>();
         for (Location loc : locations) {

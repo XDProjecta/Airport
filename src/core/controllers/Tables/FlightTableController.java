@@ -2,32 +2,23 @@ package core.controllers.Tables;
 
 import core.controllers.utils.Response;
 import core.controllers.utils.Status;
+import core.controllers.utils.sorters.FlightSorter;
 import core.models.Flight;
-import core.models.storage.FlightStorage;
 import java.util.ArrayList;
-import java.util.Comparator;
 import javax.swing.table.DefaultTableModel;
 
 public class FlightTableController {
-    public static Response updateTable(DefaultTableModel flightTable) {
+    public static Response refreshTable(DefaultTableModel flightTable) {
         try {
             flightTable.setRowCount(0);
 
-            FlightStorage storage = FlightStorage.getInstance();
-            ArrayList<Flight> flights = storage.getAll();
+            ArrayList<Flight> flights = FlightSorter.getSortedFlights();
 
             if (flights == null || flights.isEmpty()) {
                 return new Response("Error: The list is empty", Status.NO_CONTENT);
             }
 
-            ArrayList<Flight> clones = new ArrayList<>();
             for (Flight f : flights) {
-                clones.add(f.copy());
-            }
-
-            clones.sort(Comparator.comparing(Flight::getId));
-
-            for (Flight f : clones) {
                 String scaleId;
                 if (f.getScaleLocation() == null) {
                     scaleId = "-";
