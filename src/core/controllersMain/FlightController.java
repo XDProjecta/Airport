@@ -1,16 +1,14 @@
-package core.controllersMain;
+    package core.controllersMain;
 
 import core.controllers.utils.Response;
 import core.controllers.utils.Status;
 import core.models.*;
-import core.models.JsonReaders.ReadJsonFlight;
 import core.models.storage.FlightStorage;
 import core.models.storage.LocationStorage;
 import core.models.storage.PlaneStorage;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 
 public class FlightController {
 
@@ -31,29 +29,19 @@ public class FlightController {
             String minutesDurationsScaleStr
     ) {
         try {
-            // Validaciones básicas, si está vacío en este caso y si no es el formato adecuado.
             if (id == null || id.isEmpty() || !id.matches("[A-Z]{3}\\d{3}")) {
-                return new Response("Invalid ID format. It must be in format XXXYYY.", Status.BAD_REQUEST);
-            }
-
-            if (planeId == null || departureId == null || arrivalId == null ||
-                yearStr == null || monthStr == null || dayStr == null ||
-                hourStr == null || minuteStr == null || hoursDurationsArrivalStr == null ||
-                minutesDurationsArrivalStr == null || hoursDurationsScaleStr == null || minutesDurationsScaleStr == null) {
-                return new Response("All fields must be filled.", Status.BAD_REQUEST);
+                return new Response("Invalid ID format. It must be like ABC123.", Status.BAD_REQUEST);
             }
 
             if (departureId.equals(arrivalId)) {
                 return new Response("Departure and arrival locations must be different.", Status.BAD_REQUEST);
             }
 
-            // Validar si el ID ya existe
             FlightStorage storage = FlightStorage.getInstance();
             if (storage.findById(id) != null) {
-                return new Response("A flight with this ID already exists.", Status.BAD_REQUEST);
+                return new Response("Flight with this ID already exists.", Status.BAD_REQUEST);
             }
 
-            // Obtener objetos reales
             Plane plane = PlaneStorage.getInstance().findById(planeId);
             if (plane == null) return new Response("Plane not found.", Status.BAD_REQUEST);
 
@@ -69,26 +57,12 @@ public class FlightController {
                 if (scale == null) return new Response("Scale location not found.", Status.BAD_REQUEST);
             }
 
-            // Parsear fecha y duración
+            // === Parsear fecha ===
             int year = Integer.parseInt(yearStr);
             int month = Integer.parseInt(monthStr);
             int day = Integer.parseInt(dayStr);
             int hour = Integer.parseInt(hourStr);
             int minute = Integer.parseInt(minuteStr);
-
-            int hoursDurationsArrival = Integer.parseInt(hoursDurationsArrivalStr);
-            int minutesDurationsArrival = Integer.parseInt(minutesDurationsArrivalStr);
-            int hoursDurationsScale = Integer.parseInt(hoursDurationsScaleStr);
-            int minutesDurationsScale = Integer.parseInt(minutesDurationsScaleStr);
-
-            if (hoursDurationsArrival < 0 || minutesDurationsArrival < 0 ||
-                (hoursDurationsArrival == 0 && minutesDurationsArrival == 0)) {
-                return new Response("Flight duration must be greater than 00:00.", Status.BAD_REQUEST);
-            }
-
-            if (scale == null && (hoursDurationsScale != 0 || minutesDurationsScale != 0)) {
-                return new Response("If scale is null, scale duration must be 00:00.", Status.BAD_REQUEST);
-            }
 
             LocalDateTime departureDate;
             try {
@@ -97,22 +71,35 @@ public class FlightController {
                 return new Response("Invalid departure date or time.", Status.BAD_REQUEST);
             }
 
-            // Crear vuelo
-            Flight flight;
-            if (scale == null) {
-                flight = new Flight(id, plane, departure, arrival, departureDate, hoursDurationsArrival, minutesDurationsArrival);
-            } else {
-                flight = new Flight(id, plane, departure, arrival, scale, departureDate,
-                        hoursDurationsArrival, minutesDurationsArrival,
-                        hoursDurationsScale, minutesDurationsScale);
+            //TIME LLEGADA
+            int hoursArrival = Integer.parseInt(hoursDurationsArrivalStr);
+            int minutesArrival = Integer.parseInt(minutesDurationsArrivalStr);
+            if (hoursArrival < 0 || minutesArrival < 0 || (hoursArrival == 0 && minutesArrival == 0)) {
+                return new Response("Arrival duration must be greater than 00:00.", Status.BAD_REQUEST);
             }
 
-            // Guardar vuelo
+            //TIME ESCALA
+            int hoursScale = Integer.parseInt(hoursDurationsScaleStr);
+            int minutesScale = Integer.parseInt(minutesDurationsScaleStr);
+            if (scale == null && (hoursScale > 0 || minutesScale > 0)) {
+                return new Response("If scale is null, duration must be 00:00.", Status.BAD_REQUEST);
+            }
+
+           
+            Flight flight;
+            if (scale == null) {
+                flight = new Flight(id, plane, departure, arrival, departureDate, hoursArrival, minutesArrival);
+            } else {
+                flight = new Flight(id, plane, departure, arrival, scale, departureDate, hoursArrival, minutesArrival, hoursScale, minutesScale);
+            }
+
             storage.add(flight);
-            return new Response("Plane registered", Status.OK, flight.copy());
+            plane.addFlight(flight);
+
+            return new Response("Flight registered successfully", Status.OK, flight.copy());
 
         } catch (NumberFormatException e) {
-            return new Response("Numeric values are required in date and duration fields.", Status.BAD_REQUEST);
+            return new Response("All time and duration fields must be numeric.", Status.BAD_REQUEST);
         } catch (Exception e) {
             return new Response("Unexpected error: " + e.getMessage(), Status.INTERNAL_SERVER_ERROR);
         }
