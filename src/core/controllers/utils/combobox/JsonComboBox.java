@@ -21,16 +21,16 @@ public class JsonComboBox {
     public static Response addJson() {
         try {
             ReadJsonLocation jsonLocation = new ReadJsonLocation();
-            ArrayList<Location> locations = jsonLocation.read("src\\json\\locations.json");
+            ArrayList<Location> locations = jsonLocation.read("json/locations.json");
 
             ReadJsonFlight jsonFlights = new ReadJsonFlight();
-            ArrayList<Flight> flights = jsonFlights.read("src\\json\\flights.json");
+            ArrayList<Flight> flights = jsonFlights.read("json/flights.json");
 
             ReadJsonPassenger jsonPassenger = new ReadJsonPassenger();
-            ArrayList<Passenger> passengers = jsonPassenger.read("src\\json\\passengers.json");
+            ArrayList<Passenger> passengers = jsonPassenger.read("json/passengers.json");
 
             ReadJsonPlane jsonPlanes = new ReadJsonPlane();
-            ArrayList<Plane> planes = jsonPlanes.read("src\\json\\planes.json");
+            ArrayList<Plane> planes = jsonPlanes.read("json/planes.json");
 
             return new Response("File upload successfully", Status.OK);
         } catch (JSONException e) {

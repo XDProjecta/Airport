@@ -1,4 +1,3 @@
-
 package core.controllers.Tables;
 
 import core.controllers.utils.Response;
@@ -10,9 +9,9 @@ import java.util.Comparator;
 import javax.swing.table.DefaultTableModel;
 
 public class PassengerTableController {
-        public static Response updateTable(DefaultTableModel PassengerTable) {
+    public static Response updateTable(DefaultTableModel passengerTable) {
         try {
-            PassengerTable.setRowCount(0);
+            passengerTable.setRowCount(0);
 
             PassengerStorage storage = PassengerStorage.getInstance();
             ArrayList<Passenger> passengers = storage.getAll();
@@ -21,10 +20,17 @@ public class PassengerTableController {
                 return new Response("Error: The list is empty", Status.NO_CONTENT);
             }
 
-            passengers.sort(Comparator.comparingLong(Passenger::getId));
-
+            // usamos PROTOTIPE para clonar un pasajero con el método .copy()
+            ArrayList<Passenger> clones = new ArrayList<>();
             for (Passenger p : passengers) {
-                PassengerTable.addRow(new Object[]{
+                clones.add(p.copy());
+            }
+
+            // Ordenamos los pasajeros clonados
+            clones.sort(Comparator.comparingLong(Passenger::getId));
+
+            for (Passenger p : clones) {
+                passengerTable.addRow(new Object[]{
                     p.getId(),
                     p.getFirstname(),
                     p.getLastname(),
@@ -32,7 +38,8 @@ public class PassengerTableController {
                     p.calculateAge(),
                     p.generateFullPhone(),
                     p.getCountry(),
-                    p.getNumFlights() });
+                    p.getNumFlights()
+                });
             }
 
             return new Response("Passenger list loaded successfully", Status.OK);
