@@ -5,6 +5,7 @@
 package main;
 
 import com.formdev.flatlaf.FlatDarkLaf;
+import core.controllers.utils.combobox.JsonComboBox;
 import core.controllersMain.FlightController;
 import core.controllersMain.LocationController;
 import core.controllersMain.PassengerController;
@@ -26,6 +27,7 @@ public class Main {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                JsonComboBox.addJson();
                 new AirportFrame().setVisible(true);
             }
         });

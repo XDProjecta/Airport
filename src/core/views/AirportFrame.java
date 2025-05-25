@@ -73,16 +73,19 @@ public class AirportFrame extends javax.swing.JFrame {
         this.generateHours();
         this.generateMinutes();
         this.blockPanels();
-        this.uploadJSON();
         this.uploadItemsToComboBox();
 
     }
 
-    private void uploadJSON() {
-        JsonComboBox.addJson();
-    }
-
     private void uploadItemsToComboBox() {
+        userSelect.removeAllItems();
+        planeComBox.removeAllItems();
+        addFlightIdComBox.removeAllItems();
+        delayFlightIdComBox.removeAllItems();
+        departureLocationComBox.removeAllItems();
+        flightArrivalLocationComBox.removeAllItems();
+        flightScaleLocationComBox.removeAllItems();
+
         PassengerComboBox.addItems(userSelect);
         PlaneComboBox.addItems(planeComBox);
         FlightComboBox.addItems(addFlightIdComBox);
@@ -1648,7 +1651,6 @@ public class AirportFrame extends javax.swing.JFrame {
         String hoursDurationsScale = flightScaleHourComBox.getItemAt(flightScaleHourComBox.getSelectedIndex());
         String minutesDurationsScale = flightScaleMinuteComBox.getItemAt(flightScaleMinuteComBox.getSelectedIndex());
 
-        // Se invoca el controlador que valida y registra el vuelo
         Response response = FlightController.registerFlight(
                 id, planeId, departureLocationId, arrivalLocationId, scaleLocationId,
                 year, month, day, hour, minutes,
@@ -1656,14 +1658,12 @@ public class AirportFrame extends javax.swing.JFrame {
                 hoursDurationsScale, minutesDurationsScale
         );
 
-        // Se responde con diálogos dependiendo del resultado
         if (response.getStatus() >= 500) {
             JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
         } else if (response.getStatus() >= 400) {
             JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(null, response.getMessage(), "Response Message", JOptionPane.INFORMATION_MESSAGE);
-            // Se limpia el formulario
             flightIdTxt.setText("");
             planeComBox.setSelectedIndex(0);
             departureLocationComBox.setSelectedIndex(0);
