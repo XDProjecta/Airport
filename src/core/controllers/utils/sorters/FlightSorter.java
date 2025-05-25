@@ -3,14 +3,13 @@ package core.controllers.utils.sorters;
 
 import core.models.Flight;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 
 public class FlightSorter {
-    private ArrayList<Flight> flights;
-    
-    public static ArrayList<Flight> flightsSorter(ArrayList<Flight> flights) {
-        Collections.sort(flights, Comparator.comparing(Flight::getId));
-       return flights;
+    public static ArrayList<Flight> getSortedFlights(ArrayList<Flight> flights) {
+        ArrayList<Flight> clones = new ArrayList<>();
+        for (Flight f : flights) clones.add(f.copy());
+        clones.sort(Comparator.comparing(Flight::getId));
+        return clones;
     }
 }

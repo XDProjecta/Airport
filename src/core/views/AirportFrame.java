@@ -1532,30 +1532,34 @@ public class AirportFrame extends javax.swing.JFrame {
 
         if (response.getStatus() >= 500) {
             JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
+            return;
         } else if (response.getStatus() >= 400) {
             JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(null, response.getMessage(), "Success", JOptionPane.INFORMATION_MESSAGE);
-            // Limpiar campos
-            passengerIDTxt.setText("");
-            passengerFirstNameTxt.setText("");
-            passengerLastNameTxt.setText("");
-            passengerYearTxt.setText("");
-            passengerPhoneCodeTxt.setText("");
-            passengerPhoneTxt.setText("");
-            passengerCountryTxt.setText("");
-            passengerMonth.setSelectedIndex(0);
-            passengerDay.setSelectedIndex(0);
-            ArrayList<Passenger> passengers = PassengerSorter.passengersSort(this.passengerStorage.getAll());
-
-            this.userSelect.addItem("Select User");
-
-            for (Passenger passenger : passengers) {
-                this.userSelect.addItem("" + passenger.getId());
-                System.out.println("New: " + passenger.getId());
-            }
+            return;
         }
 
+        JOptionPane.showMessageDialog(null, response.getMessage(), "Success", JOptionPane.INFORMATION_MESSAGE);
+
+        // Limpiar campos
+        passengerIDTxt.setText("");
+        passengerFirstNameTxt.setText("");
+        passengerLastNameTxt.setText("");
+        passengerYearTxt.setText("");
+        passengerPhoneCodeTxt.setText("");
+        passengerPhoneTxt.setText("");
+        passengerCountryTxt.setText("");
+        passengerMonth.setSelectedIndex(0);
+        passengerDay.setSelectedIndex(0);
+
+        // Recargar ComboBox desde el sorter
+        userSelect.removeAllItems(); // Limpia primero
+        userSelect.addItem("Select User"); // Opción inicial
+
+        ArrayList<Passenger> sortedPassengers = PassengerSorter.getSortedPassengers();
+        for (Passenger p : sortedPassengers) {
+            userSelect.addItem("" + p.getId());
+            System.out.println("New: " + p.getId());
+        }
 
     }//GEN-LAST:event_registerPassengerBtnActionPerformed
 
