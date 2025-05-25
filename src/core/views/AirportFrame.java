@@ -13,7 +13,7 @@ import core.controllers.FlightController;
 import core.controllers.LocationController;
 import core.controllers.PassengerController;
 import core.controllers.PlaneController;
-import core.controllers.UpdatePassengerController;
+import core.controllers.updatePassengerController;
 import core.controllers.utils.Response;
 import core.controllers.utils.sorters.LocationSorter;
 import core.controllers.utils.sorters.PassengerSorter;
@@ -1672,7 +1672,7 @@ public class AirportFrame extends javax.swing.JFrame {
     String phone = updatePhoneTxt.getText();
     String country = updateCountryTxt.getText();
 
-    Response response = UpdatePassengerController.passengerUpdateRegistration(id, firstname, lastname, year, month, day, phoneCode, phone, country);
+    Response response = updatePassengerController.passengerUpdateRegistration(id, firstname, lastname, year, month, day, phoneCode, phone, country);
 
     if (response.getStatus() >= 500) {
         JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);

@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
-public class UpdatePassengerController {
+public class updatePassengerController {
 
 
     public static Response passengerUpdateRegistration(String idStr, String firstNameStr, String lastNameStr, String yearStr, String monthStr, String dayStr, String codeStr, String phoneStr, String countryStr) {
