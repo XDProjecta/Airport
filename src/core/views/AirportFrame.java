@@ -1552,9 +1552,6 @@ public class AirportFrame extends javax.swing.JFrame {
         passengerDay.setSelectedIndex(0);
 
         // Recargar ComboBox desde el sorter
-        userSelect.removeAllItems(); // Limpia primero
-        userSelect.addItem("Select User"); // Opción inicial
-
         ArrayList<Passenger> sortedPassengers = PassengerSorter.getSortedPassengers();
         for (Passenger p : sortedPassengers) {
             userSelect.addItem("" + p.getId());
@@ -1583,7 +1580,6 @@ public class AirportFrame extends javax.swing.JFrame {
             airplaneModelTxt.setText("");
             airplaneCapacityTxt.setText("");
             airplaneAirline.setText("");
-            this.planeComBox.removeAllItems();
             ArrayList<Plane> sortedPlanes = PlaneSorter.getSortedPlanes();
             this.planeComBox.addItem("Plane");
             for (Plane plane : sortedPlanes) {
@@ -1618,11 +1614,6 @@ public class AirportFrame extends javax.swing.JFrame {
             airportCountryTxt.setText("");
             airportLatitudeTxt.setText("");
             airportLongitud.setText("");
-
-            // Limpiar los combobox
-            departureLocationComBox.removeAllItems();
-            flightArrivalLocationComBox.removeAllItems();
-            flightScaleLocationComBox.removeAllItems();
 
             // Agregar nuevos elementos desde el storage ordenado
             ArrayList<Location> locations = LocationSorter.getSortedLocations();
