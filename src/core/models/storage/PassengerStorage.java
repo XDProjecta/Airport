@@ -1,4 +1,3 @@
-
 package core.models.storage;
 
 import core.models.Passenger;
@@ -26,6 +25,13 @@ public class PassengerStorage implements StorageInterface<Passenger> {
         return passengers;
     }
 
-
+    public Passenger findById(long id) {
+        for (Passenger passenger : this.passengers) {
+            if (passenger.getId() == id) {
+                return passenger;
+            }
+        }
+        return null;
+    }
 
 }

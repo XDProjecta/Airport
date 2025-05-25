@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class PassengerController {
-    
+
     public static void loadPassengersFromJson() {
         ReadJsonPassenger reader = new ReadJsonPassenger();
         ArrayList<Passenger> passengers = reader.read("json/passengers.json");
@@ -36,7 +36,7 @@ public class PassengerController {
                 return new Response("All fields must be filled", Status.BAD_REQUEST);
             }
 
-            // Validar tipos numéricos
+            // Parseo
             long id = Long.parseLong(idStr);
             int year = Integer.parseInt(yearStr);
             int month = Integer.parseInt(monthStr);
@@ -66,10 +66,8 @@ public class PassengerController {
 
             // Validar duplicados
             PassengerStorage storage = PassengerStorage.getInstance();
-            for (Passenger p : storage.getAll()) {
-                if (p.getId() == id) {
-                    return new Response("A passenger with this ID already exists.", Status.BAD_REQUEST);
-                }
+            if (storage.findById(id) != null) {
+                return new Response("A passenger with this ID already exists.", Status.BAD_REQUEST);
             }
 
             // Crear y guardar pasajero
@@ -77,8 +75,6 @@ public class PassengerController {
             storage.add(passenger);
 
             return new Response("Passenger registered successfully.", Status.OK);
-            
-            
 
         } catch (NumberFormatException e) {
             return new Response("ID, date, and phone values must be numeric.", Status.BAD_REQUEST);
@@ -86,21 +82,5 @@ public class PassengerController {
             return new Response("Unexpected error: " + e.getMessage(), Status.INTERNAL_SERVER_ERROR);
         }
     }
-    
-    public static Response getAllPassengersSorted() {
-    try {
-        PassengerStorage storage = PassengerStorage.getInstance();
-
-        List<Passenger> sorted = storage.getAll().stream()
-            .map(Passenger::copy) // Patrón Prototype
-            .sorted(Comparator.comparing(Passenger::getId)) // Ordena por ID; puedes cambiar a getLastname()
-            .collect(Collectors.toList());
-
-        return new Response("Passengers retrieved successfully.", Status.OK, sorted);
-    } catch (Exception e) {
-        return new Response("Unexpected error: " + e.getMessage(), Status.INTERNAL_SERVER_ERROR);
-    }
-}
 
 }
-    
