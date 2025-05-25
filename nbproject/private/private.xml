@@ -3,8 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/juanp/Documents/NetBeansProjects/Airport/src/core/controllers/utils/combobox/JsonComboBox.java</file>
-            <file>file:/C:/Users/juanp/Documents/NetBeansProjects/Airport/src/core/views/AirportFrame.java</file>
+            <file>file:/C:/Users/jmanu/Documents/Airport/src/core/controllers/AddFlightToPassengerController.java</file>
+            <file>file:/C:/Users/jmanu/Documents/Airport/src/core/models/storage/PassengerStorage.java</file>
+            <file>file:/C:/Users/jmanu/Documents/Airport/src/core/models/Flight.java</file>
+            <file>file:/C:/Users/jmanu/Documents/Airport/src/core/controllers/FlightController.java</file>
         </group>
     </open-files>
 </project-private>

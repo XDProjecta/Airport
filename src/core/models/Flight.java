@@ -28,8 +28,7 @@ public class Flight {
         this.departureDate = departureDate;
         this.hoursDurationArrival = hoursDurationArrival;
         this.minutesDurationArrival = minutesDurationArrival;
-        //solucionar error aquí 😭😭😭😭 :(((
-        this.plane.addFlight(this);
+        
     }
 
     public Flight(String id, Plane plane, Location departureLocation, Location scaleLocation, Location arrivalLocation, LocalDateTime departureDate, int hoursDurationArrival, int minutesDurationArrival, int hoursDurationScale, int minutesDurationScale) {
@@ -45,7 +44,7 @@ public class Flight {
         this.hoursDurationScale = hoursDurationScale;
         this.minutesDurationScale = minutesDurationScale;
         
-        this.plane.addFlight(this);
+        
     }
     // esto hay q sacarlo? toca ver cómo arreglar la relación entre flight, plane y passenger cuidadosamente.
     public void addPassenger(Passenger passenger) {
@@ -107,6 +106,12 @@ public class Flight {
     public int getNumPassengers() {
         return passengers.size();
     }
+    
+    // Devuelve la lista de pasajeros del vuelo
+    public ArrayList<Passenger> getPassengers() {
+        return this.passengers;
+    }
+
     
     public Flight copy() {
     Flight copy;
