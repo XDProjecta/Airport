@@ -11,47 +11,48 @@ import java.util.ArrayList;
 
 public class PassengerFlightController {
 
-    public static Response addFlight(String id, String idFlight) {
-        PassengerStorage passengerRegister = PassengerStorage.getInstance();
-        ArrayList<Passenger> passengers = passengerRegister.getAll();
-        FlightStorage flightRegister = FlightStorage.getInstance();
-        ArrayList<Flight> flights = flightRegister.getAll();
-        Passenger passengerSelected = null;
-        Flight flightSelected = null;
+        public static Response addFlight(String passengerIdStr, String flightIdStr) {
         try {
-            long idPassenger;
+            // Validar ID del pasajero
+            if (passengerIdStr == null || passengerIdStr.trim().isEmpty()) {
+                return new Response("Passenger ID must not be empty.", Status.BAD_REQUEST);
+            }
+
+            long passengerId;
             try {
-                idPassenger = Long.parseLong(id);
+                passengerId = Long.parseLong(passengerIdStr);
             } catch (NumberFormatException ex) {
-                return new Response("Select a passenger on administration", Status.BAD_REQUEST);
-            }
-            if (passengers.isEmpty()) {
-                return new Response("No passengers available", Status.BAD_REQUEST);
+                return new Response("Passenger ID must be numeric.", Status.BAD_REQUEST);
             }
 
-            for (Passenger passenger : passengers) {
-                passengerSelected = passenger;
+            PassengerStorage passengerStorage = PassengerStorage.getInstance();
+            Passenger passenger = passengerStorage.findById(passengerId);
+            if (passenger == null) {
+                return new Response("Passenger not found.", Status.NOT_FOUND);
             }
 
-            if (idFlight.equals("Flight")) {
-                return new Response("Select a flight", Status.BAD_REQUEST);
+            // Validar ID del vuelo
+            if (flightIdStr == null || flightIdStr.trim().isEmpty() || flightIdStr.equals("Flight")) {
+                return new Response("Please select a valid flight.", Status.BAD_REQUEST);
             }
 
-            if (flights.isEmpty()) {
-                return new Response("No flights available", Status.BAD_REQUEST);
-            }
-            for (Passenger passenger : passengers) {
-                passengerSelected = passenger;
-            }
-            
-            for(Flight flight: flights){
-                flightSelected = flight;
+            FlightStorage flightStorage = FlightStorage.getInstance();
+            Flight flight = flightStorage.getById(flightIdStr);
+            if (flight == null) {
+                return new Response("Flight not found.", Status.NOT_FOUND);
             }
 
-            PassengerFlight.addFlight(passengerSelected, flightSelected);
-            return new Response("Flight added successfully", Status.OK);
+            // Verificar si el pasajero ya está en ese vuelo
+            if (flight.getPassengers().contains(passenger)) {
+                return new Response("Passenger is already assigned to this flight.", Status.BAD_REQUEST);
+            }
+
+            // Añadir vuelo al pasajero
+            PassengerFlight.addFlight(passenger, flight);
+            return new Response("Flight added successfully.", Status.OK);
+
         } catch (Exception ex) {
-            return new Response("Unexpected error", Status.INTERNAL_SERVER_ERROR);
+            return new Response("Unexpected error: " + ex.getMessage(), Status.INTERNAL_SERVER_ERROR);
         }
     }
 }

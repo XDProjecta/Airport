@@ -15,6 +15,7 @@ import core.controllersMain.PassengerController;
 import core.controllersMain.PlaneController;
 import core.controllers.Tables.FlightTableController;
 import core.controllers.Tables.LocationTableController;
+import core.controllers.Tables.PassengerFlightTableController;
 import core.controllers.Tables.PassengerTableController;
 import core.controllers.Tables.PlaneTableController;
 import core.controllersMain.UpdatePassengerController;
@@ -27,6 +28,8 @@ import core.controllers.utils.combobox.PlaneComboBox;
 import core.controllers.utils.sorters.LocationSorter;
 import core.controllers.utils.sorters.PassengerSorter;
 import core.controllers.utils.sorters.PlaneSorter;
+import core.controllersMain.DelayFlightController;
+import core.controllersMain.PassengerFlightController;
 import core.models.storage.FlightStorage;
 import core.models.storage.LocationStorage;
 import core.models.storage.PassengerStorage;
@@ -1725,63 +1728,48 @@ public class AirportFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_updateBtnActionPerformed
 
     private void addFlightBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFlightBtnActionPerformed
-        /*   // TODO add your handling code here:
-        long passengerId = Long.parseLong(addPassengertIdTxt.getText());
+        String passengerId = addPassengertIdTxt.getText();
         String flightId = addFlightIdComBox.getItemAt(addFlightIdComBox.getSelectedIndex());
 
-        Passenger passenger = null;
-        Flight flight = null;
+        Response response = PassengerFlightController.addFlight(passengerId, flightId);
 
-        for (Passenger p : this.passengers) {
-            if (p.getId() == passengerId) {
-                passenger = p;
-            }
+        if (response.getStatus() >= 500) {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
+        } else if (response.getStatus() >= 400) {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Success", JOptionPane.INFORMATION_MESSAGE);
         }
-
-        for (Flight f : this.flights) {
-            if (flightId.equals(f.getId())) {
-                flight = f;
-            }
-        }
-
-        passenger.addFlight(flight);
-        flight.addPassenger(passenger);
-         */
     }//GEN-LAST:event_addFlightBtnActionPerformed
 
     private void delayFlightsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delayFlightsBtnActionPerformed
-        /*    // TODO add your handling code here:
         String flightId = delayFlightIdComBox.getItemAt(delayFlightIdComBox.getSelectedIndex());
-        int hours = Integer.parseInt(delayFlightHoursComBox.getItemAt(delayFlightHoursComBox.getSelectedIndex()));
-        int minutes = Integer.parseInt(delayFlightsMinutesComBox.getItemAt(delayFlightsMinutesComBox.getSelectedIndex()));
+        String hours = delayFlightHoursComBox.getItemAt(delayFlightHoursComBox.getSelectedIndex());
+        String minutes = delayFlightsMinutesComBox.getItemAt(delayFlightsMinutesComBox.getSelectedIndex());
 
-        Flight flight = null;
-        for (Flight f : this.flights) {
-            if (flightId.equals(f.getId())) {
-                flight = f;
-            }
+        Response response = DelayFlightController.delayFlight(flightId, hours, minutes);
+
+        if (response.getStatus() >= 500) {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
+        } else if (response.getStatus() >= 400) {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Success", JOptionPane.INFORMATION_MESSAGE);
         }
-
-        flight.delay(hours, minutes);*/
     }//GEN-LAST:event_delayFlightsBtnActionPerformed
 
     private void refreshMyFlightsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshMyFlightsBtnActionPerformed
-        /*// TODO add your handling code here:
-        long passengerId = Long.parseLong(userSelect.getItemAt(userSelect.getSelectedIndex()));
+        String passengerId = userSelect.getItemAt(userSelect.getSelectedIndex());
+        Response response = PassengerFlightTableController.refreshTable(
+                (DefaultTableModel) showMyFlightsTable.getModel(),
+                passengerId
+        );
 
-        Passenger passenger = null;
-        for (Passenger p : this.passengers) {
-            if (p.getId() == passengerId) {
-                passenger = p;
-            }
+        if (response.getStatus() >= 500) {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
+        } else if (response.getStatus() >= 400) {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Advertencia " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
         }
-
-        ArrayList<Flight> flights = passenger.getFlights();
-        DefaultTableModel model = (DefaultTableModel) showMyFlightsTable.getModel();
-        model.setRowCount(0);
-        for (Flight flight : flights) {
-            model.addRow(new Object[]{flight.getId(), flight.getDepartureDate(), flight.calculateArrivalDate()});
-        }*/
     }//GEN-LAST:event_refreshMyFlightsBtnActionPerformed
 
     private void refreshAllPassagersBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshAllPassagersBtnActionPerformed
