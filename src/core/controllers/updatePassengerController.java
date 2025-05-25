@@ -18,21 +18,20 @@ public class updatePassengerController {
         Passenger passengerToUpdate = null;
         try {
             int parsedYear, parsedMonthCode;
-            long parsedPhone, parsedId;
+            long parsedPhone, parsedId = 0;
             LocalDate parsedBirthDate;
 
-            if (allPassengers == null) {
-                return new Response("No passengers registered", Status.BAD_REQUEST);
+            if (allPassengers.isEmpty()) {
+                return new Response("No passengers registered", Status.NO_CONTENT);
             }
+
 
             if (idStr.equals("")) {
                 return new Response("Chose an ID on administration", Status.BAD_REQUEST);
             }
 
-            try {
-                parsedId = Integer.parseInt(idStr);
-            } catch (NumberFormatException ex) {
-                return new Response("Id must be numeric", Status.BAD_REQUEST);
+            if (parsedId < 0 || idStr.length() > 15) {
+                return new Response("ID must be a positive number with up to 15 digits", Status.BAD_REQUEST);
             }
 
             if (firstNameStr.equals("")) {
@@ -77,7 +76,7 @@ public class updatePassengerController {
             }
 
             try {
-                parsedPhone = Long.parseLong(codeStr); // ojo: usa codeStr, ¿error?
+                parsedPhone = Long.parseLong(codeStr); 
                 if (parsedPhone < 0 || phoneStr.length() > 11) {
                     return new Response("Phone must be 0 to 11 digits long", Status.BAD_REQUEST);
                 }

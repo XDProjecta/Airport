@@ -15,40 +15,52 @@ public class DelayFlightController {
             ArrayList<Flight> flights = storage.getAll();
             Flight delayFlight = null;
 
-            System.out.println("Size: " + flights.size());
             int hourInt = 0, minuteInt = 0;
 
-            if(flights==null){
-                return new Response ("There are not flights", Status.NO_CONTENT);
-            }
-            
-            if (id.equals("Flight")) {
-                return new Response("Choose an ID", Status.OK);
+            //Validaciones
+            if (flights == null || flights.isEmpty()) {
+                return new Response("There are no flights registered", Status.NO_CONTENT);
             }
 
+            if (id == null || id.trim().isEmpty() || id.equals("Flight")) {
+                return new Response("Please choose a valid flight ID", Status.BAD_REQUEST);
+            }
+
+            if (hour == null || hour.trim().isEmpty()) {
+                return new Response("Choose an hour", Status.BAD_REQUEST);
+            }
             try {
                 hourInt = Integer.parseInt(hour);
-                if (hour.equals("")) {
-                    return new Response("Choose an hour", Status.OK);
+                if (hourInt <= 0) {
+                    return new Response("Hour must be greater than 0", Status.BAD_REQUEST);
                 }
             } catch (NumberFormatException ex) {
                 return new Response("Hour must be numeric", Status.BAD_REQUEST);
             }
 
+            if (minute == null || minute.trim().isEmpty()) {
+                return new Response("Choose a minute", Status.BAD_REQUEST);
+            }
             try {
                 minuteInt = Integer.parseInt(minute);
-                if (hour.equals("")) {
-                    return new Response("Choose a minute", Status.OK);
+                if (minuteInt < 0) {
+                    return new Response("Minute must be 0 or more", Status.BAD_REQUEST);
                 }
             } catch (NumberFormatException ex) {
                 return new Response("Minute must be numeric", Status.BAD_REQUEST);
             }
-            
-                for (Flight flight : flights) {
-                    if (flight.getId().equals(id)) {
-                        delayFlight = flight;
-                    }
+
+            //Busqueda de vuelo por ID
+            for (Flight flight : flights) {
+                if (flight.getId().equals(id)) {
+                    delayFlight = flight;
+                    break;
                 }
+            }
+
+            if (delayFlight == null) {
+                return new Response("Flight ID not found", Status.NOT_FOUND);
+            }
 
             DelayFlight.delay(delayFlight, hourInt, minuteInt);
 
