@@ -125,7 +125,7 @@ public class Passenger {
     public void addFlight(Flight flight) {
         this.flights.add(flight);
     }
-
+// EL ERROR ESTABA ACÁ OMBE, LA MALA PAL QUE HIZO EL PROTOTYPE MAL (yo)
     public Passenger copy() {
         Passenger copy = new Passenger(
                 this.id, this.firstname, this.lastname,

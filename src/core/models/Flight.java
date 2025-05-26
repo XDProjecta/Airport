@@ -132,12 +132,9 @@ public void addPassenger(Passenger passenger) {
                     this.minutesDurationScale
             );
         }
-
-        // Copia los pasajeros (sin modificar el original)
         for (Passenger p : this.passengers) {
             copy.passengers.add(p);
         }
-
         return copy;
     }
 
