@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
 public class PassengerTableController {
+
     public static Response updateTable(DefaultTableModel passengerTable) {
         try {
             passengerTable.setRowCount(0);
@@ -20,13 +21,12 @@ public class PassengerTableController {
             for (Passenger p : sorted) {
                 passengerTable.addRow(new Object[]{
                     p.getId(),
-                    p.getFirstname(),
-                    p.getLastname(),
+                    p.getFirstname()+" "+ p.getLastname(),
                     p.getBirthDate(),
                     p.calculateAge(),
                     p.generateFullPhone(),
                     p.getCountry(),
-                    p.getNumFlights()
+                    p.getFlights().size()
                 });
             }
 

@@ -8,6 +8,7 @@ import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 
 public class FlightTableController {
+
     public static Response refreshTable(DefaultTableModel flightTable) {
         try {
             flightTable.setRowCount(0);
@@ -58,7 +59,7 @@ public class FlightTableController {
                     departureDate,
                     arrivalDate,
                     planeId,
-                    numPassengers
+                    f.getPassengers().size()
                 });
             }
 

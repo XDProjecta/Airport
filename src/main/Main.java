@@ -5,6 +5,7 @@
 package main;
 
 import com.formdev.flatlaf.FlatDarkLaf;
+import core.models.FlightRelations.PassengerFlightRelationLoader;
 import core.models.JsonReaders.JsonInitializer;
 import core.views.AirportFrame;
 import javax.swing.UIManager;
@@ -24,6 +25,7 @@ public class Main {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 JsonInitializer.loadAll();
+                PassengerFlightRelationLoader.linkRelations();
                 new AirportFrame().setVisible(true);
             }
         });

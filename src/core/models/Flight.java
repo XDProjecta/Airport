@@ -1,11 +1,10 @@
-
 package core.models;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Flight {
-    
+
     private final String id;
     private ArrayList<Passenger> passengers;
     private Plane plane;
@@ -17,7 +16,7 @@ public class Flight {
     private int minutesDurationArrival;
     private int hoursDurationScale;
     private int minutesDurationScale;
-    
+
 
     public Flight(String id, Plane plane, Location departureLocation, Location arrivalLocation, LocalDateTime departureDate, int hoursDurationArrival, int minutesDurationArrival) {
         this.id = id;
@@ -28,7 +27,7 @@ public class Flight {
         this.departureDate = departureDate;
         this.hoursDurationArrival = hoursDurationArrival;
         this.minutesDurationArrival = minutesDurationArrival;
-        
+
     }
 
     public Flight(String id, Plane plane, Location departureLocation, Location scaleLocation, Location arrivalLocation, LocalDateTime departureDate, int hoursDurationArrival, int minutesDurationArrival, int hoursDurationScale, int minutesDurationScale) {
@@ -43,14 +42,18 @@ public class Flight {
         this.minutesDurationArrival = minutesDurationArrival;
         this.hoursDurationScale = hoursDurationScale;
         this.minutesDurationScale = minutesDurationScale;
-        
-        
+
     }
-    // esto hay q sacarlo? toca ver cómo arreglar la relación entre flight, plane y passenger cuidadosamente.
-    public void addPassenger(Passenger passenger) {
-        this.passengers.add(passenger);
-    }
-    
+
+public ArrayList<Passenger> getPassengers() {
+    return passengers;
+}
+
+public void addPassenger(Passenger passenger) {
+    this.passengers.add(passenger);
+}
+
+
     public String getId() {
         return id;
     }
@@ -94,58 +97,48 @@ public class Flight {
     public void setDepartureDate(LocalDateTime departureDate) {
         this.departureDate = departureDate;
     }
-    
+
     public LocalDateTime calculateArrivalDate() {
         return departureDate.plusHours(hoursDurationScale).plusHours(hoursDurationArrival).plusMinutes(minutesDurationScale).plusMinutes(minutesDurationArrival);
     }
-    //APARTE
-    public void delay(int hours, int minutes) {
-        this.departureDate = this.departureDate.plusHours(hours).plusMinutes(minutes);
-    }
-    
+
     public int getNumPassengers() {
         return passengers.size();
     }
-    
-    // Devuelve la lista de pasajeros del vuelo
-    public ArrayList<Passenger> getPassengers() {
-        return this.passengers;
-    }
 
-    
     public Flight copy() {
-    Flight copy;
-    if (this.scaleLocation == null) {
-        copy = new Flight(
-            this.id,
-            this.plane,
-            this.departureLocation,
-            this.arrivalLocation,
-            this.departureDate,
-            this.hoursDurationArrival,
-            this.minutesDurationArrival
-        );
-    } else {
-        copy = new Flight(
-            this.id,
-            this.plane,
-            this.departureLocation,
-            this.scaleLocation,
-            this.arrivalLocation,
-            this.departureDate,
-            this.hoursDurationArrival,
-            this.minutesDurationArrival,
-            this.hoursDurationScale,
-            this.minutesDurationScale
-        );
-    }
+        Flight copy;
+        if (this.scaleLocation == null) {
+            copy = new Flight(
+                    this.id,
+                    this.plane,
+                    this.departureLocation,
+                    this.arrivalLocation,
+                    this.departureDate,
+                    this.hoursDurationArrival,
+                    this.minutesDurationArrival
+            );
+        } else {
+            copy = new Flight(
+                    this.id,
+                    this.plane,
+                    this.departureLocation,
+                    this.scaleLocation,
+                    this.arrivalLocation,
+                    this.departureDate,
+                    this.hoursDurationArrival,
+                    this.minutesDurationArrival,
+                    this.hoursDurationScale,
+                    this.minutesDurationScale
+            );
+        }
 
-    // Copia los pasajeros (sin modificar el original)
-    for (Passenger p : this.passengers) {
-        copy.passengers.add(p);
-    }
+        // Copia los pasajeros (sin modificar el original)
+        for (Passenger p : this.passengers) {
+            copy.passengers.add(p);
+        }
 
-    return copy;
-}
+        return copy;
+    }
 
 }

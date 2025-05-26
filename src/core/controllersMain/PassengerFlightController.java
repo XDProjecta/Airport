@@ -10,48 +10,39 @@ import core.models.storage.PassengerStorage;
 
 public class PassengerFlightController {
 
-        public static Response addFlight(String passengerIdStr, String flightIdStr) {
+    public static Response addFlight(String passengerIdStr, String flightId) {
         try {
-            // Validar ID del pasajero
-            if (passengerIdStr == null || passengerIdStr.trim().isEmpty()) {
-                return new Response("Passenger ID must not be empty.", Status.BAD_REQUEST);
-            }
-
-            long passengerId;
-            try {
-                passengerId = Long.parseLong(passengerIdStr);
-            } catch (NumberFormatException ex) {
-                return new Response("Passenger ID must be numeric.", Status.BAD_REQUEST);
-            }
+            long passengerId = Long.parseLong(passengerIdStr);
 
             PassengerStorage passengerStorage = PassengerStorage.getInstance();
+            FlightStorage flightStorage = FlightStorage.getInstance();
+
             Passenger passenger = passengerStorage.findById(passengerId);
             if (passenger == null) {
-                return new Response("Passenger not found.", Status.NOT_FOUND);
+                return new Response("Passenger not found", Status.BAD_REQUEST);
             }
 
-            // Validar ID del vuelo
-            if (flightIdStr == null || flightIdStr.trim().isEmpty() || flightIdStr.equals("Flight")) {
-                return new Response("Please select a valid flight.", Status.BAD_REQUEST);
-            }
-
-            FlightStorage flightStorage = FlightStorage.getInstance();
-            Flight flight = flightStorage.getById(flightIdStr);
+            Flight flight = flightStorage.findById(flightId);
             if (flight == null) {
-                return new Response("Flight not found.", Status.NOT_FOUND);
+                return new Response("Flight not found", Status.BAD_REQUEST);
             }
 
-            // Verificar si el pasajero ya está en ese vuelo
-            if (flight.getPassengers().contains(passenger)) {
-                return new Response("Passenger is already assigned to this flight.", Status.BAD_REQUEST);
+            // Validar que no esté duplicado
+            if (passenger.getFlights().contains(flight)) {
+                return new Response("Passenger is already registered to this flight", Status.BAD_REQUEST);
             }
 
-            // Añadir vuelo al pasajero
-            PassengerFlight.addFlight(passenger, flight);
-            return new Response("Flight added successfully.", Status.OK);
+            // Establecer relación bidireccional
+            passenger.addFlight(flight);
+            flight.addPassenger(passenger);
 
-        } catch (Exception ex) {
-            return new Response("Unexpected error: " + ex.getMessage(), Status.INTERNAL_SERVER_ERROR);
+            return new Response("Flight added successfully", Status.OK);
+
+        } catch (NumberFormatException e) {
+            return new Response("Invalid passenger ID format", Status.BAD_REQUEST);
+        } catch (Exception e) {
+            return new Response("Unexpected error: " + e.getMessage(), Status.INTERNAL_SERVER_ERROR);
         }
     }
+
 }

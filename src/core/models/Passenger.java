@@ -1,4 +1,3 @@
-
 package core.models;
 
 import java.time.LocalDate;
@@ -6,7 +5,7 @@ import java.time.Period;
 import java.util.ArrayList;
 
 public class Passenger {
-    
+
     private final long id;
     private String firstname;
     private String lastname;
@@ -30,7 +29,7 @@ public class Passenger {
         this.country = country;
         this.flights = new ArrayList<>();
     }
-    
+
     public long getId() {
         return id;
     }
@@ -38,7 +37,7 @@ public class Passenger {
     public String getFirstname() {
         return firstname;
     }
-    
+
     public String getLastname() {
         return lastname;
     }
@@ -65,10 +64,6 @@ public class Passenger {
 
     public String getCountry() {
         return country;
-    }
-
-    public ArrayList<Flight> getFlights() {
-        return flights;
     }
 
     public void setFirstname(String firstname) {
@@ -106,35 +101,43 @@ public class Passenger {
     public void setCountry(String country) {
         this.country = country;
     }
-    
+
     public String getFullname() {
         return firstname + " " + lastname;
     }
-    
+
     public String generateFullPhone() {
         return "+" + countryPhoneCode + " " + phone;
     }
-    
+
     public int calculateAge() {
         return Period.between(birthDate, LocalDate.now()).getYears();
     }
-    
+
     public int getNumFlights() {
         return flights.size();
     }
 
+    public ArrayList<Flight> getFlights() {
+        return flights;
+    }
+
+    public void addFlight(Flight flight) {
+        this.flights.add(flight);
+    }
+
     public Passenger copy() {
-    Passenger copy = new Passenger(
-        this.id,
-        this.firstname,
-        this.lastname,
-        this.birthDate,
-        this.countryPhoneCode,
-        this.phone,
-        this.country
-    );
+        Passenger copy = new Passenger(
+                this.id,
+                this.firstname,
+                this.lastname,
+                this.birthDate,
+                this.countryPhoneCode,
+                this.phone,
+                this.country
+        );
         copy.setEmail(this.email);
         copy.setPhoneCode(this.PhoneCode);
-            return copy;
-        }   
+        return copy;
+    }
 }
