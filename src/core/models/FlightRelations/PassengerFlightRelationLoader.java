@@ -14,18 +14,17 @@ public class PassengerFlightRelationLoader {
         ArrayList<Flight> flights = FlightStorage.getInstance().getAll();
 
         for (Passenger passenger : passengers) {
-            ArrayList<Flight> flightsOfPassenger = passenger.getFlights(); // Ya cargadas desde JSON
+            ArrayList<Flight> flightsOfPassenger = passenger.getFlights();
 
             for (Flight flight : flightsOfPassenger) {
                 Flight realFlight = FlightStorage.getInstance().findById(flight.getId());
 
                 if (realFlight != null) {
-                    // Reestablecer conexión real entre vuelo y pasajero
+
                     realFlight.addPassenger(passenger);
-                    passenger.addFlight(realFlight); // Esto es seguro, ya lo valida internamente
+                    passenger.addFlight(realFlight);
                 }
             }
         }
     }
 }
-

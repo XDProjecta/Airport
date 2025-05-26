@@ -128,16 +128,18 @@ public class Passenger {
 
     public Passenger copy() {
         Passenger copy = new Passenger(
-                this.id,
-                this.firstname,
-                this.lastname,
-                this.birthDate,
-                this.countryPhoneCode,
-                this.phone,
-                this.country
+                this.id, this.firstname, this.lastname,
+                this.birthDate, this.countryPhoneCode,
+                this.phone, this.country
         );
         copy.setEmail(this.email);
         copy.setPhoneCode(this.PhoneCode);
+
+        for (Flight f : this.flights) {
+            copy.addFlight(f);
+        }
+
         return copy;
     }
+
 }

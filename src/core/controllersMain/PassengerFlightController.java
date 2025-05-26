@@ -27,14 +27,12 @@ public class PassengerFlightController {
                 return new Response("Flight not found", Status.BAD_REQUEST);
             }
 
-            // Validar que no esté duplicado
             if (passenger.getFlights().contains(flight)) {
                 return new Response("Passenger is already registered to this flight", Status.BAD_REQUEST);
             }
 
-            // Establecer relación bidireccional
-            passenger.addFlight(flight);
-            flight.addPassenger(passenger);
+        passenger.getFlights().add(flight);
+        flight.getPassengers().add(passenger);
 
             return new Response("Flight added successfully", Status.OK);
 
