@@ -4,11 +4,9 @@
  */
 package core.views;
 
-import core.models.Flight;
 import core.models.Location;
 import core.models.Passenger;
 import core.models.Plane;
-import com.formdev.flatlaf.FlatDarkLaf;
 import core.controllersMain.FlightController;
 import core.controllersMain.LocationController;
 import core.controllersMain.PassengerController;
@@ -21,7 +19,6 @@ import core.controllers.Tables.PlaneTableController;
 import core.controllersMain.UpdatePassengerController;
 import core.controllers.utils.Response;
 import core.controllers.utils.combobox.FlightComboBox;
-import core.controllers.utils.combobox.JsonComboBox;
 import core.controllers.utils.combobox.LocationComboBox;
 import core.controllers.utils.combobox.PassengerComboBox;
 import core.controllers.utils.combobox.PlaneComboBox;
@@ -35,11 +32,8 @@ import core.models.storage.LocationStorage;
 import core.models.storage.PassengerStorage;
 import core.models.storage.PlaneStorage;
 import java.awt.Color;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 /**

@@ -3,15 +3,19 @@ package core.controllersMain;
 import core.controllers.utils.Response;
 import core.controllers.utils.Status;
 import core.models.Flight;
-import core.models.FlightRelations.PassengerFlight;
 import core.models.Passenger;
 import core.models.storage.FlightStorage;
 import core.models.storage.PassengerStorage;
 
 public class PassengerFlightController {
 
-    public static Response addFlight(String passengerIdStr, String flightId) {
+    public static Response addFlight(String passengerIdStr, String flightIdStr) {
         try {
+            // Validar que no esté vacío
+            if (passengerIdStr == null || passengerIdStr.trim().isEmpty()) {
+                return new Response("Passenger ID must not be empty.", Status.BAD_REQUEST);
+            }
+
             long passengerId = Long.parseLong(passengerIdStr);
 
             PassengerStorage passengerStorage = PassengerStorage.getInstance();
@@ -22,7 +26,7 @@ public class PassengerFlightController {
                 return new Response("Passenger not found", Status.BAD_REQUEST);
             }
 
-            Flight flight = flightStorage.findById(flightId);
+            Flight flight = flightStorage.findById(flightIdStr);
             if (flight == null) {
                 return new Response("Flight not found", Status.BAD_REQUEST);
             }
@@ -31,8 +35,7 @@ public class PassengerFlightController {
                 return new Response("Passenger is already registered to this flight", Status.BAD_REQUEST);
             }
 
-        passenger.getFlights().add(flight);
-        flight.getPassengers().add(passenger);
+            passenger.getFlights().contains(flight);
 
             return new Response("Flight added successfully", Status.OK);
 
