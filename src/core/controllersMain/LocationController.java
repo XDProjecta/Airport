@@ -2,21 +2,11 @@ package core.controllersMain;
 
 import core.controllers.utils.Response;
 import core.controllers.utils.Status;
-import core.models.JsonReaders.ReadJsonLocation;
 import core.models.Location;
 import core.models.storage.LocationStorage;
-import java.util.ArrayList;
-
 public class LocationController {
 
-    public static void loadLocationsFromJson() {
-        ReadJsonLocation reader = new ReadJsonLocation();
-        ArrayList<Location> locations = reader.read("json/locations.json");
-        LocationStorage storage = LocationStorage.getInstance();
-        for (Location loc : locations) {
-            storage.add(loc);
-        }
-    }
+    
 
     public static Response registerLocation(String id, String name, String city, String country, String latitudeStr, String longitudeStr) {
         try {
@@ -54,7 +44,7 @@ public class LocationController {
             Location location = new Location(id, name, city, country, latitude, longitude);
             storage.add(location);
 
-            return new Response("Plane registered", Status.OK, location.copy());
+                return new Response("Location registered", Status.OK, location.copy());
 
         } catch (NumberFormatException e) {
             return new Response("Latitude and longitude must be valid numbers.", Status.BAD_REQUEST);
